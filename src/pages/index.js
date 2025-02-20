@@ -2,6 +2,8 @@ import Head from "next/head";
 import Image from "next/image";
 import { Geist, Geist_Mono } from "next/font/google";
 import styles from "@/styles/Home.module.css";
+import Link from 'next/link'
+import App from "./_app";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -40,6 +42,22 @@ export default function Home() {
             </li>
             <li>Save and see your changes instantly.</li>
           </ol>
+
+
+            <>
+            <h1>Links</h1>
+            <ul>
+              <li>
+                <Link href="/">Home Page</Link>
+              </li>
+              <li>
+                <Link href="/example">Example</Link>
+              </li>
+              <li>
+                <Link href="/draft-area">Draft-area</Link>
+              </li>
+            </ul>
+            </>
 
           <div className={styles.ctas}>
             <a

@@ -3,7 +3,7 @@ import React from "react";
 // export default function Draft (){
 // }
 
-const Draft = () => {
+const Example = () => {
 
     return (
         <>
@@ -11,4 +11,4 @@ const Draft = () => {
         </>
     )
 }
-export default Draft;
+export default Example;
