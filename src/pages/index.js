@@ -45,7 +45,7 @@ export default function Home() {
 
 
             <>
-            <h1>Links</h1>
+            <h1>Inner Links on index.js</h1>
             <ul>
               <li>
                 <Link href="/">Home Page</Link>

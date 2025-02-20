@@ -3,6 +3,8 @@ import Link from "next/link";
 
 
 const MainLayout = ({children})=> (<>
+
+
     <h1>Links</h1>
     <ul>
         <li>
@@ -14,9 +16,14 @@ const MainLayout = ({children})=> (<>
         <li>
             <Link href="/draft-area">Draft-area</Link>
         </li>
+        <li>
+            <Link href="/bookmark-app/bookmarks">My Bookmarks</Link>
+        </li>
     </ul>
     <>
+        <main style = {{padding: "20px"}}>
         {children}
+        </main>
     </>
 </>);
 
