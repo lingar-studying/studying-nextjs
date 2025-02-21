@@ -41,13 +41,7 @@ const Bookmarks = (props) => {
     }
 
 
-    useEffect(()=>{
-        if(updatedId >= 0){
-            const temp = mockBookmarks.filter(item=>item.id === updatedId)[0];
-            setItemState(temp);
-        }
 
-    },[updatedId]);
     const addBookmark = () => {
         const temp = {...itemState, id: generateId()};
         mockBookmarks.push(temp);
@@ -63,6 +57,13 @@ const Bookmarks = (props) => {
 
     }
 
+    const updateBookmark =()=>{
+        const idx = mockBookmarks.findIndex(item=> item.id === updatedId);
+        mockBookmarks[idx] = itemState;
+        console.log("idx = " + idx);
+        setUpdatedId(-1);
+    }
+
     //Effects
 
     //on init
@@ -71,6 +72,23 @@ const Bookmarks = (props) => {
         setData(tempData);
     }, []);
 
+    useEffect(()=>{
+        if(updatedId >= 0){
+            const temp = mockBookmarks.filter(item=>item.id === updatedId)[0];
+            setItemState(temp);
+        }else{
+            setItemState({
+                id: -1,
+                bookName: "",
+                sectionNum: 0,
+                currentPage: 0,
+                quote: "",
+                comment: "",
+                isActiveLast2Weeks: false
+            });
+        }
+
+    },[updatedId]);
     /*
      bookName: "Kombinatorika IV",
             sectionNum: 2,
@@ -84,7 +102,7 @@ const Bookmarks = (props) => {
 
             <>
                 <Button color={"primary"} variant="contained"
-                        onClick={() => setShowCreateItem(!showCreateItem)}>
+                        onClick={() => setShowCreateItem(!showCreateItem)} disabled={updatedId >=0}>
                     {showCreateItem ? "close" : "Create new book mark"}
                 </Button>
                 {showCreateItem &&
@@ -300,7 +318,14 @@ const Bookmarks = (props) => {
                             <Button size="small"
                                     onClick={() => (updatedId !== item.id ? setUpdatedId(item.id) : setUpdatedId(-1))}
 
-                            >Update Bookmark</Button>
+                            >{updatedId === item.id? "Cancel" : "Update Bookmark"}</Button>
+                            {updatedId === item.id &&
+                                <Button size="small" color={"warning"}
+                                        variant={"contained"}
+                                        onClick={updateBookmark}
+
+                                >Save</Button>
+                            }
                         </CardActions>
                     </Card>
                 })}
