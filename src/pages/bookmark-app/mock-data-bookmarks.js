@@ -1,5 +1,11 @@
+let globalId = 0;
+
+export const generateId =()=> globalId++;
+
+
 export const mockBookmarks = [
     {
+        id: generateId(),
         bookName: "Nedarim",
         sectionNum: 2,
         currentPage: 21,
@@ -7,8 +13,10 @@ export const mockBookmarks = [
         isActiveLast2Weeks: true,
         comment: "No comment"
 
+
     },
     {
+        id: generateId(),
         bookName: "Likutey Moharan Tinyana",
         sectionNum: 47,
         currentPage: 27,
@@ -18,6 +26,7 @@ export const mockBookmarks = [
 
     },
     {
+        id: generateId(),
         bookName: "Kombinatorika IV",
         sectionNum: 2,
         currentPage: 47,
@@ -34,5 +43,3 @@ Comment,
 isActiveLastTwoWeeks.
 
  */
-
-
