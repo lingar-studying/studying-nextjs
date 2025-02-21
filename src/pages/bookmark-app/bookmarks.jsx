@@ -1,5 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {generateId, mockBookmarks} from "./mock-data-bookmarks";
+import DeleteIcon from '@mui/icons-material/Delete';
+
 import {
     Box,
     Button,
@@ -7,7 +9,7 @@ import {
     CardActions,
     CardContent,
     Checkbox,
-    FormControlLabel,
+    FormControlLabel, IconButton,
     TextField,
     Typography
 } from "@mui/material";
@@ -26,6 +28,9 @@ const Bookmarks = (props) => {
         isActiveLast2Weeks: false
     });
     const [updatedId, setUpdatedId] = useState(-1);
+
+
+    const [deletedId, setDeletedId] = useState(-1);
 
     const changeItem = (ev) => {
         let {value, name} = ev.target;
@@ -89,6 +94,19 @@ const Bookmarks = (props) => {
         }
 
     },[updatedId]);
+
+    useEffect(()=>{
+        if(deletedId >= 0){
+
+            const idx = mockBookmarks.findIndex(item=> item.id === deletedId);
+
+            mockBookmarks.splice(idx, 1);
+            setDeletedId(-1);
+
+        }
+
+
+    },[deletedId]);
     /*
      bookName: "Kombinatorika IV",
             sectionNum: 2,
@@ -326,6 +344,12 @@ const Bookmarks = (props) => {
 
                                 >Save</Button>
                             }
+
+                            <IconButton aria-label="delete"
+                            onClick={()=>setDeletedId(item.id)}>
+                                <DeleteIcon />
+                            </IconButton>
+
                         </CardActions>
                     </Card>
                 })}
