@@ -21,7 +21,11 @@ export default function handler(req, res) {
 
     res.status(200).json(data);
   }
+  if (req.method === 'DELETE') {
 
+    const data = deleteBookmark(req.body);
+    res.status(200).json(data);
+  }
 
 }
 const getBookmarks=()=>{
@@ -41,4 +45,15 @@ const updateBookmark = (updatedBookmark)=>{
   //console.log("idx = " + idx);
 
   return updatedBookmark;
+}
+const deleteBookmark = (id) =>{
+
+
+
+  const idx = bookmarksMockServer.findIndex(item=> item.id === +id);//U need to convert to number since it's came as string.
+  console.log("idx (see on node teminal)= " + idx)
+
+  bookmarksMockServer.splice(idx, 1);
+
+  return true;
 }

@@ -177,11 +177,41 @@ const BookmarksServer = () => {
 
     useEffect(()=>{
         if(deletedId >= 0){
+            console.log("heppn")
+           const deleteBookmark = async () =>{
+               try {
+                    // Perform a POST request using fetch
+                    const response = await fetch('/api/bookmark', {
+                        method: 'DELETE',
+                        headers: {
+                            // 'Content-Type': 'application/json', // specify content type
+                            'Content-Type': 'text/plain'
+                        },
+                        body: JSON.stringify(deletedId ), // send 'id' as a JSON string
+                    });
 
-            const idx = mockBookmarks.findIndex(item=> item.id === deletedId);
+                    // Check if the response is successful
+                    if (!response.ok) {
+                        throw new Error('Failed to send data');
+                    }
 
-            mockBookmarks.splice(idx, 1);
-            setDeletedId(-1);
+                    // Parse the JSON response
+                    const result = await response.json();
+
+                    // Set the response data to state
+                    setDataChanged(!dataChanged);
+
+                } catch (err) {
+                    // Handle any error
+                    // setError(err.message);
+                    console.error('Error:', err);
+                }
+                finally {
+                   setDeletedId(-1);
+               }
+            }
+            deleteBookmark();
+
 
         }
 
