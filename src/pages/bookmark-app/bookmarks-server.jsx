@@ -19,6 +19,7 @@ const BookmarksServer = () => {
 
     const [showCreateItem, setShowCreateItem] = useState(false);
 
+    const [dataChanged, setDataChanged] = useState(false);
     const [itemState, setItemState] = useState({
         bookName: "",
         sectionNum: 0,
@@ -31,6 +32,8 @@ const BookmarksServer = () => {
 
 
     const [deletedId, setDeletedId] = useState(-1);
+
+
 
     const changeItem = (ev) => {
         let {value, name} = ev.target;
@@ -47,18 +50,48 @@ const BookmarksServer = () => {
 
 
 
-    const addBookmark = () => {
+    const addBookmark = async () => {
         const temp = {...itemState, id: generateId()};
-        mockBookmarks.push(temp);
-        setItemState({
-            id: -1,
-            bookName: "",
-            sectionNum: 0,
-            currentPage: 0,
-            quote: "",
-            comment: "",
-            isActiveLast2Weeks: false
-        });
+
+        try {
+            // Perform a POST request using fetch
+            const response = await fetch('/api/bookmark', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json', // specify content type
+                },
+                body: JSON.stringify(temp), // convert the object to JSON
+            });
+
+            setItemState({
+                id: -1,
+                bookName: "",
+                sectionNum: 0,
+                currentPage: 0,
+                quote: "",
+                comment: "",
+                isActiveLast2Weeks: false
+            });
+            setDataChanged(!dataChanged);
+            // Check if the response is successful
+            if (!response.ok) {
+                throw new Error('Failed to send data');
+            }
+
+            // Parse the JSON response
+            //const result = await response.json();
+
+
+        } catch (err) {
+            // Handle any error
+
+            console.error('Error:', err);
+        }
+
+
+
+        // mockBookmarks.push(temp);
+
 
     }
 
@@ -88,7 +121,7 @@ const BookmarksServer = () => {
         };
         fetchBookmarks();
 
-    }, []);
+    }, [dataChanged]);
 
     useEffect(()=>{
         if(updatedId >= 0){
