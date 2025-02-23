@@ -95,11 +95,45 @@ const BookmarksServer = () => {
 
     }
 
-    const updateBookmark =()=>{
-        const idx = mockBookmarks.findIndex(item=> item.id === updatedId);
-        mockBookmarks[idx] = itemState;
-        console.log("idx = " + idx);
-        setUpdatedId(-1);
+    const updateBookmark = async ()=>{
+        try {
+            // Perform a POST request using fetch
+            const response = await fetch('/api/bookmark', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json', // specify content type
+                },
+                body: JSON.stringify(itemState), // convert the object to JSON
+            });
+
+            setItemState({
+                id: -1,
+                bookName: "",
+                sectionNum: 0,
+                currentPage: 0,
+                quote: "",
+                comment: "",
+                isActiveLast2Weeks: false
+            });
+            setDataChanged(!dataChanged);
+            // Check if the response is successful
+            if (!response.ok) {
+                throw new Error('Failed to send data');
+            }
+
+            // Parse the JSON response
+            //const result = await response.json();
+            setUpdatedId(-1);
+
+
+        } catch (err) {
+            // Handle any error
+
+            console.error('Error:', err);
+        }
+
+
+
     }
 
     //Effects
@@ -125,7 +159,7 @@ const BookmarksServer = () => {
 
     useEffect(()=>{
         if(updatedId >= 0){
-            const temp = mockBookmarks.filter(item=>item.id === updatedId)[0];
+            const temp = data.filter(item=>item.id === updatedId)[0];
             setItemState(temp);
         }else{
             setItemState({
