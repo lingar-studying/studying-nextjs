@@ -117,7 +117,7 @@ const BookmarksClient = (props) => {
      */
     return (
         <>
-
+        <Box component={"h2"} sx={{color: "warning.main"}}>Bookmarks - Only Client</Box>
             <>
                 <Button color={"primary"} variant="contained"
                         onClick={() => setShowCreateItem(!showCreateItem)} disabled={updatedId >=0}>
