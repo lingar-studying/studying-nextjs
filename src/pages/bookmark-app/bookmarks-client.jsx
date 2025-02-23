@@ -14,7 +14,7 @@ import {
     Typography
 } from "@mui/material";
 
-const Bookmarks = (props) => {
+const BookmarksClient = (props) => {
     const [data, setData] = useState([]);
 
     const [showCreateItem, setShowCreateItem] = useState(false);
@@ -361,4 +361,4 @@ const Bookmarks = (props) => {
 }
 //do you see good now?
 
-export default Bookmarks;
+export default BookmarksClient;

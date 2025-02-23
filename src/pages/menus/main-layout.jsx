@@ -17,7 +17,7 @@ const MainLayout = ({children})=> (<>
             <Link href="/draft-area">Draft-area</Link>
         </li>
         <li>
-            <Link href="/bookmark-app/bookmarks">My Bookmarks</Link>
+            <Link href="/bookmark-app/bookmarks-client">My Bookmarks - Only Client</Link>
         </li>
     </ul>
     <>
