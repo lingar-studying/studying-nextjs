@@ -1,6 +1,9 @@
 import {useRouter} from 'next/router';
 import {useEffect, useState} from "react";
-import {Box, Paper, Typography} from "@mui/material";
+import {Box, Button, IconButton, Paper, Typography} from "@mui/material";
+import DeleteIcon from '@mui/icons-material/Delete';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+
 
 const SingleBookmark = () => {
     const router = useRouter();
@@ -8,6 +11,10 @@ const SingleBookmark = () => {
 
     const [bookmark, setBookmark] = useState({});
     const {singleBookmark} = router.query;
+    const handleBack = () => {
+        router.back(); // Go back to the previous page in history
+    };
+
     console.log("bookmark  ", bookmark)
     useEffect(() => {
         // const tempData = mockBookmarks;
@@ -65,8 +72,17 @@ const SingleBookmark = () => {
                         </Typography>
                     </Paper>
                 </Box>
+
             </Box>
 
+
+            <h1>We here ? </h1>
+            <IconButton onClick={handleBack} color={"primary"}>
+                <ArrowBackIcon />
+            </IconButton>
+            <Button onClick={handleBack} variant="contained" endIcon={<ArrowBackIcon />} sx={{ position: 'absolute', bottom: 10, left: 10 }}  color={"secondary"}>
+                Back
+            </Button>
         </>
     );
 }

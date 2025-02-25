@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {generateId, mockBookmarks} from "./mock-data-bookmarks";
+import {generateId} from "./mock-data-bookmarks";
 import DeleteIcon from '@mui/icons-material/Delete';
 
 import {
@@ -9,10 +9,12 @@ import {
     CardActions,
     CardContent,
     Checkbox,
-    FormControlLabel, IconButton,
+    FormControlLabel,
+    IconButton,
     TextField,
     Typography
 } from "@mui/material";
+import Link from "next/dist/client/app-dir/link";
 
 const BookmarksServer = () => {
     const [data, setData] = useState([]);
@@ -34,7 +36,6 @@ const BookmarksServer = () => {
     const [deletedId, setDeletedId] = useState(-1);
 
 
-
     const changeItem = (ev) => {
         let {value, name} = ev.target;
 
@@ -47,7 +48,6 @@ const BookmarksServer = () => {
             return {...prevState, [name]: value};
         }));
     }
-
 
 
     const addBookmark = async () => {
@@ -89,13 +89,12 @@ const BookmarksServer = () => {
         }
 
 
-
         // mockBookmarks.push(temp);
 
 
     }
 
-    const updateBookmark = async ()=>{
+    const updateBookmark = async () => {
         try {
             // Perform a POST request using fetch
             const response = await fetch('/api/bookmark', {
@@ -133,7 +132,6 @@ const BookmarksServer = () => {
         }
 
 
-
     }
 
     //Effects
@@ -157,11 +155,11 @@ const BookmarksServer = () => {
 
     }, [dataChanged]);
 
-    useEffect(()=>{
-        if(updatedId >= 0){
-            const temp = data.filter(item=>item.id === updatedId)[0];
+    useEffect(() => {
+        if (updatedId >= 0) {
+            const temp = data.filter(item => item.id === updatedId)[0];
             setItemState(temp);
-        }else{
+        } else {
             setItemState({
                 id: -1,
                 bookName: "",
@@ -173,13 +171,13 @@ const BookmarksServer = () => {
             });
         }
 
-    },[updatedId]);
+    }, [updatedId]);
 
-    useEffect(()=>{
-        if(deletedId >= 0){
+    useEffect(() => {
+        if (deletedId >= 0) {
             console.log("heppn")
-           const deleteBookmark = async () =>{
-               try {
+            const deleteBookmark = async () => {
+                try {
                     // Perform a POST request using fetch
                     const response = await fetch('/api/bookmark', {
                         method: 'DELETE',
@@ -187,7 +185,7 @@ const BookmarksServer = () => {
                             // 'Content-Type': 'application/json', // specify content type
                             'Content-Type': 'text/plain'
                         },
-                        body: JSON.stringify(deletedId ), // send 'id' as a JSON string
+                        body: JSON.stringify(deletedId), // send 'id' as a JSON string
                     });
 
                     // Check if the response is successful
@@ -205,10 +203,9 @@ const BookmarksServer = () => {
                     // Handle any error
                     // setError(err.message);
                     console.error('Error:', err);
+                } finally {
+                    setDeletedId(-1);
                 }
-                finally {
-                   setDeletedId(-1);
-               }
             }
             deleteBookmark();
 
@@ -216,7 +213,7 @@ const BookmarksServer = () => {
         }
 
 
-    },[deletedId]);
+    }, [deletedId]);
     /*
      bookName: "Kombinatorika IV",
             sectionNum: 2,
@@ -227,10 +224,12 @@ const BookmarksServer = () => {
      */
     return (
         <>
-        <Box component={"h2"} sx={{color: "error.main"}}>Bookmarks - With Server</Box>
+            <Box component={"h2"} sx={{color: "error.main"}}>Bookmarks - With
+                Server</Box>
             <>
                 <Button color={"primary"} variant="contained"
-                        onClick={() => setShowCreateItem(!showCreateItem)} disabled={updatedId >=0}>
+                        onClick={() => setShowCreateItem(!showCreateItem)}
+                        disabled={updatedId >= 0}>
                     {showCreateItem ? "close" : "Create new book mark"}
                 </Button>
                 {showCreateItem &&
@@ -332,132 +331,134 @@ const BookmarksServer = () => {
                 {data.map((item, idx) => {
                     return <Card sx={{width: 275, margin: "15px  auto"}}
                                  key={idx + item.id}>
-                        <CardContent>
-                            <Typography gutterBottom sx={{
-                                color: 'text.secondary',
-                                fontSize: 14
-                            }}>
+                        <Link href={`/bookmark-app/${item.id}`} passHref>
+                            <CardContent>
+                                <Typography gutterBottom sx={{
+                                    color: 'text.secondary',
+                                    fontSize: 14
+                                }}>
 
-                                {(updatedId === item.id) ?
-                                    <FormControlLabel
-                                        control={
-                                            <Checkbox
-                                                checked={itemState.isActiveLast2Weeks}
+                                    {(updatedId === item.id) ?
+                                        <FormControlLabel
+                                            control={
+                                                <Checkbox
+                                                    checked={itemState.isActiveLast2Weeks}
+                                                    onChange={changeItem}
+                                                    name="isActiveLast2Weeks"
+
+                                                />
+                                            }
+                                            label="Active in the last 2 weeks?"
+                                        />
+                                        :
+                                        <>{item.isActiveLast2Weeks ? "Well Done" : "Take some time for this"}</>
+                                    }
+
+                                </Typography>
+                                <Typography variant="h5" component="div">
+
+                                    {(updatedId === item.id) ?
+                                        <>
+
+                                            <TextField
+                                                required
+                                                id="outlined-required"
+                                                label="Book Name"
+
+                                                value={itemState.bookName}
                                                 onChange={changeItem}
-                                                name="isActiveLast2Weeks"
+                                                name="bookName"
+                                                sx={{marginBottom: "2em"}}
+                                            />
+                                            <TextField
+                                                required
+                                                id="outlined-required"
+                                                label="Section Number"
+                                                type="number"
+                                                value={itemState.sectionNum}
+                                                onChange={changeItem}
+                                                name="sectionNum"
+                                                sx={{marginBottom: "2em"}}
 
                                             />
-                                        }
-                                        label="Active in the last 2 weeks?"
-                                    />
-                                    :
-                                    <>{item.isActiveLast2Weeks ? "Well Done" : "Take some time for this"}</>
-                                }
 
-                            </Typography>
-                            <Typography variant="h5" component="div">
-
-                                {(updatedId === item.id) ?
-                                    <>
-
-                                        <TextField
-                                            required
-                                            id="outlined-required"
-                                            label="Book Name"
-
-                                            value={itemState.bookName}
-                                            onChange={changeItem}
-                                            name="bookName"
-                                            sx={{marginBottom: "2em"}}
-                                        />
-                                        <TextField
-                                            required
-                                            id="outlined-required"
-                                            label="Section Number"
-                                            type="number"
-                                            value={itemState.sectionNum}
-                                            onChange={changeItem}
-                                            name="sectionNum"
-                                            sx={{marginBottom: "2em"}}
-
-                                        />
-
-                                    </>
+                                        </>
 
 
-                                    : <>{item.bookName},
-                                        Ch. {item.sectionNum}#</>
-                                }
+                                        : <>{item.bookName},
+                                            Ch. {item.sectionNum}#</>
+                                    }
 
-                            </Typography>
-                            <Typography sx={{
-                                color: 'text.secondary',
-                                mb: 1.5
-                            }}>
-                                {(updatedId === item.id) ?
-                                    <>
-                                        <TextField
-                                            required
-                                            id="outlined-required"
-                                            label="Current Page"
-                                            type="number"
-                                            value={itemState.currentPage}
-                                            onChange={changeItem}
-                                            name="currentPage"
-                                            sx={{marginBottom: "2em"}}
+                                </Typography>
+                                <Typography sx={{
+                                    color: 'text.secondary',
+                                    mb: 1.5
+                                }}>
+                                    {(updatedId === item.id) ?
+                                        <>
+                                            <TextField
+                                                required
+                                                id="outlined-required"
+                                                label="Current Page"
+                                                type="number"
+                                                value={itemState.currentPage}
+                                                onChange={changeItem}
+                                                name="currentPage"
+                                                sx={{marginBottom: "2em"}}
 
-                                        />
-                                    </>
-                                    :
-                                    <>Page {item.currentPage}#</>}
-                            </Typography>
-                            <Typography variant="body2">
-                                {(updatedId === item.id) ?
-                                    <>
-                                        <TextField
+                                            />
+                                        </>
+                                        :
+                                        <>Page {item.currentPage}#</>}
+                                </Typography>
+                                <Typography variant="body2">
+                                    {(updatedId === item.id) ?
+                                        <>
+                                            <TextField
 
-                                            id="outlined-required"
-                                            label="Quote"
+                                                id="outlined-required"
+                                                label="Quote"
 
-                                            value={itemState.quote}
-                                            onChange={changeItem}
-                                            name="quote"
-                                            helperText="The Current Quote of the reader"
-                                        />
-                                        <TextField
+                                                value={itemState.quote}
+                                                onChange={changeItem}
+                                                name="quote"
+                                                helperText="The Current Quote of the reader"
+                                            />
+                                            <TextField
 
-                                            id="outlined-required"
-                                            label="Comment"
+                                                id="outlined-required"
+                                                label="Comment"
 
-                                            value={itemState.comment}
-                                            onChange={changeItem}
-                                            name="comment"
-                                        />
-                                    </> :
-                                    <>
-                                        <b>Quote:</b> "{item.quote}"
-                                        <br/>
-                                        Comment: {item.comment}
-                                    </>}
+                                                value={itemState.comment}
+                                                onChange={changeItem}
+                                                name="comment"
+                                            />
+                                        </> :
+                                        <>
+                                            <b>Quote:</b> "{item.quote}"
+                                            <br/>
+                                            Comment: {item.comment}
+                                        </>}
 
-                            </Typography>
-                        </CardContent>
+                                </Typography>
+                            </CardContent>
+                        </Link>
                         <CardActions>
                             <Button size="small"
                                     onClick={() => (updatedId !== item.id ? setUpdatedId(item.id) : setUpdatedId(-1))}
 
-                            >{updatedId === item.id? "Cancel" : "Update Bookmark"}</Button>
+                            >{updatedId === item.id ? "Cancel" : "Update Bookmark"}</Button>
                             {updatedId === item.id &&
-                                <Button size="small" color={"warning"}
-                                        variant={"contained"}
-                                        onClick={updateBookmark}
+                            <Button size="small" color={"warning"}
+                                    variant={"contained"}
+                                    onClick={updateBookmark}
 
-                                >Save</Button>
+                            >Save</Button>
                             }
 
                             <IconButton aria-label="delete"
-                            onClick={()=>setDeletedId(item.id)}>
-                                <DeleteIcon />
+                                        onClick={() => setDeletedId(item.id)}>
+                                <DeleteIcon/>
                             </IconButton>
 
                         </CardActions>
