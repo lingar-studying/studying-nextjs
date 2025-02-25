@@ -22,6 +22,9 @@ const MainLayout = ({children})=> (<>
         <li>
             <Link href="/bookmark-app/bookmarks-server">My Bookmarks - with server</Link>
         </li>
+        <li>
+            <Link href="/bookmark-app/bookmarks-database">My Bookmarks - with Database</Link>
+        </li>
     </ul>
     <>
         <main style = {{padding: "20px"}}>
