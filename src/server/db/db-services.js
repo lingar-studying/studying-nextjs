@@ -1,7 +1,7 @@
 import  mongoose from "mongoose"; // Fix the import
 // const mongoose = require("mongoose");
 
-const MONGO_URI = "mongodb://lingar:12345678@localhost:27017/?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&ssl=false";
+const MONGO_URI = "mongodb://lingar:12345678@localhost:27017?authSource=admin";
 
 
 let cached = global.mongoose || { conn: null, promise: null };
@@ -31,7 +31,25 @@ export async function connectToDatabase() {
 export const connectDB = () => {
     mongoose.connect(MONGO_URI)//mongodb://lingar:12345678@localhost:27017 - without password: mongodb://localhost:27017
         .then(() => console.log("db connected by mongoose"))
-        .catch((e) => console.log("Error in mongoose connection", e));
-
-
+        .catch((e) => {
+            console.log("Error in mongoose connection", e);
+            throw ("error on mongoose")
+        });
 }
+
+let isConnected = false;
+
+export const connectDB2 = async (uri, callback) => {
+    if (isConnected) return;
+
+    try {
+        await mongoose.connect(MONGO_URI, {serverSelectionTimeoutMS: 5000});
+        isConnected = true;
+        console.log("db connected by mongoose 222");
+    } catch (e) {
+        console.log("Error in mongoose connection 222\n", e);
+        throw ("error on mongoose")
+
+
+    }
+};

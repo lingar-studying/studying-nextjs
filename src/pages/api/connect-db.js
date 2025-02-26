@@ -3,19 +3,26 @@
 import {bookmarksMockServer} from "../../server/bookmarks/bookmarks-mock-server";
 import {Bookmark} from "@mui/icons-material";
 import {generateId, mockBookmarks} from "../bookmark-app/mock-data-bookmarks";
-import {connectDB, connectToDatabase} from  '../../server/db/db-services';
+import {
+  connectDB,
+  connectDB2,
+  connectToDatabase
+} from '../../server/db/db-services';
+import {error} from "next/dist/build/output/log";
 
 export default async function handler(req, res) {
   if (req.method === 'GET') {
-    console.log("do something")
-    const mongoose = await connectToDatabase();
-    console.log("mongoose = ", mongoose)
+    console.log("Connecting to DB from api")
 
-    if (!mongoose) {
-      return res.status(500).json({ error: 'Failed to connect to MongoDB' });
+    try {
+      await connectDB2();
+      res.status(200).end();
+
+    }catch (er){
+      console.error("Problem with db from api");
+      res.status(500).end();
     }
 
-    res.status(200).json({ connected: mongoose !== null });
   }
 
   if (req.method === 'POST') {

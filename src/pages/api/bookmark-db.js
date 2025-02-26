@@ -9,7 +9,6 @@ import {connectToDatabase} from "../../server/db/db-services";
 
 export default async function handler(req, res) {
   if (req.method === 'GET') {
-   const mongooseTool = await connectToDatabase();
     res.status(200).json();
   }
 
