@@ -140,35 +140,28 @@ const BookmarksDatabase = () => {
     //on init
 
     useEffect(() => {
-        fetch('/api/connect-db', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json', // specify content type
-            },
 
-        });
-        let data = {};
-        // const connectToDB = async () => {
-        //     try {
-        //
-        //         const response = await fetch('/api/connect-db', {
-        //             method: 'GET',
-        //             headers: {
-        //                 'Content-Type': 'application/json', // specify content type
-        //             },
-        //
-        //         });
-        //         if (response.connected == false) {
-        //             setDbConnected(false);
-        //         }
-        //     } catch (err) {
-        //         console.error('Error checking MongoDB connection:', err);
-        //
-        //         setDbConnected(false);
-        //     }
-        //
-        // }
-        // connectToDB();
+        const connectToDb = async () => {
+            try {
+                // Perform a POST request using fetch
+                const response = await fetch('/api/connect-db', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json', // specify content type
+                    },
+                });
+
+                if(!response.ok) throw ("");
+                console.log("COnnected from component")
+            } catch (err) {
+                // Handle any error
+
+                console.error('Error on component trying to connect db:\n', err);
+                setDbConnected(false);
+            }
+        }
+        connectToDb();
+
     }, []);
 
     useEffect(() => {

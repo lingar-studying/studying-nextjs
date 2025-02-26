@@ -20,7 +20,7 @@ export default async function handler(req, res) {
 
     }catch (er){
       console.error("Problem with db from api");
-      res.status(500).end();
+      throw("db off");
     }
 
   }
