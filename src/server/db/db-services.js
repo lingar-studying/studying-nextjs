@@ -4,7 +4,7 @@ import {generateId} from "../../pages/bookmark-app/mock-data-bookmarks"; // Fix 
 import {mockBookmarks} from "../../pages/bookmark-app/mock-data-bookmarks";
 //general configuration
 const DATABASE_NAME = "BookmarksApp";
-const MONGO_URI = "mongodb://lingar:12345678@localhost:27017/" + DATABASE_NAME + "?authSource=admin";
+const MONGO_URI = "mongodb://lingar:12345672228@localhost:27017/" + DATABASE_NAME + "?authSource=admin";
 
 const BookmarkSchemaShape = {
     bookName: String,
@@ -23,7 +23,7 @@ let BookmarkModel = null;
 let bookmarkScheme = null;
 
 let cached = global.mongoose || {conn: null, promise: null};
-
+//old
 export async function connectToDatabase() {
     if (cached.conn) return cached.conn; // Return cached connection if available
     console.log("working? ")
@@ -46,7 +46,8 @@ export async function connectToDatabase() {
     return cached.conn;
 }
 
-export const connectDB = () => {
+//traditinal
+export const connectDBOLD = () => {
     mongoose.connect(MONGO_URI)//mongodb://lingar:12345678@localhost:27017 - without password: mongodb://localhost:27017
         .then(() => console.log("db connected by mongoose"))
         .catch((e) => {
@@ -66,8 +67,13 @@ export const connectDB2 = async (uri, callback) => {
         await createInitData();
         console.log("db connected by mongoose 222");
     } catch (e) {
+        if (e.name === "MongoServerError" && e.code === 18) {
+            console.error("Wrong credentials! \n***CHECK THE CREDENTIALS ON THE URI***");
+           // alert("wwww");
+            throw "Authentication error";
+        }
         console.log("Error in mongoose connection 222\n", e);
-        throw ("error on mongoose")
+        throw "error on mongoose";
 
 
     }

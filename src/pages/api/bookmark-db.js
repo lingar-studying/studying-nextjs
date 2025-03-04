@@ -1,9 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 
 import {bookmarksMockServer} from "../../server/bookmarks/bookmarks-mock-server";
-import {Bookmark} from "@mui/icons-material";
-import {generateId, mockBookmarks} from "../bookmark-app/mock-data-bookmarks";
-import {connectToDatabase} from "../../server/db/db-services";
+import {generateId} from "../bookmark-app/mock-data-bookmarks";
 
 // import {connectDB} from  '@/server/db/db-services';
 
