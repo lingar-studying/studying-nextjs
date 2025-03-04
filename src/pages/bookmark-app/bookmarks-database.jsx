@@ -36,7 +36,7 @@ const BookmarksDatabase = () => {
     const [deletedId, setDeletedId] = useState(-1);
 
     const [dbConnected, setDbConnected] = useState(true);
-
+    console.log("data = ", data)
     const changeItem = (ev) => {
         let {value, name} = ev.target;
 
@@ -52,11 +52,12 @@ const BookmarksDatabase = () => {
 
 
     const addBookmark = async () => {
-        const temp = {...itemState, id: generateId()};
+        const temp = {...itemState};
+        console.log("asdasd")
 
         try {
             // Perform a POST request using fetch
-            const response = await fetch('/api/bookmark', {
+            const response = await fetch('/api/bookmark-db', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json', // specify content type
@@ -65,7 +66,7 @@ const BookmarksDatabase = () => {
             });
 
             setItemState({
-                id: -1,
+                // id: -1,
                 bookName: "",
                 sectionNum: 0,
                 currentPage: 0,
@@ -150,8 +151,12 @@ const BookmarksDatabase = () => {
                         'Content-Type': 'application/json', // specify content type
                     },
                 });
-
                 if(!response.ok) throw ("");
+
+                const tempResponse = await fetch("/api/bookmark-db");
+                const tempData = await tempResponse.json();
+                // console.log("temp = ", tempData)
+                setData(tempData);
                 console.log("COnnected from component")
             } catch (err) {
                 // Handle any error
@@ -162,25 +167,25 @@ const BookmarksDatabase = () => {
         }
         connectToDb();
 
-    }, []);
-
-    useEffect(() => {
-        // const tempData = mockBookmarks;
-        const fetchBookmarks = async () => {
-            try {
-                //you can use here axios too.....
-                const response = await fetch('/api/bookmark'); // כתובת ה-API
-                const data = await response.json();
-                setData(data); // שמירת הנתונים
-            } catch (error) {
-                alert('Error fetching bookmarks'); // טיפול בשגיאות
-            } finally {
-                // setLoading(false); // סיום טעינה
-            }
-        };
-        fetchBookmarks();
-
     }, [dataChanged]);
+
+    // useEffect(() => {
+    //     // const tempData = mockBookmarks;
+    //     const fetchBookmarks = async () => {
+    //         try {
+    //             //you can use here axios too.....
+    //             const response = await fetch('/api/bookmark'); // כתובת ה-API
+    //             const data = await response.json();
+    //             setData(data); // שמירת הנתונים
+    //         } catch (error) {
+    //             alert('Error fetching bookmarks'); // טיפול בשגיאות
+    //         } finally {
+    //             // setLoading(false); // סיום טעינה
+    //         }
+    //     };
+    //     fetchBookmarks();
+    //
+    // }, [dataChanged]);
 
     useEffect(() => {
         if (updatedId >= 0) {
@@ -347,7 +352,7 @@ const BookmarksDatabase = () => {
 
             <h2>For testing</h2>
             {data.map((item, idx) => {
-                return <p key={item.id}>#{item.id}-Book Name = {item.bookName},
+                return <p key={item.id}>#{item._id}-Book Name = {item.bookName},
                     Section {item.sectionNum},
                     page {item.currentPage},
                     {item.isActiveLast2Weeks ? "Well Done" : "Take some time for this"}

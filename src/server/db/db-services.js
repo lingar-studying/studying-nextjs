@@ -93,11 +93,13 @@ export const createInitData = async () => {
 }
 
 
-const getAllBookmarks = async () =>{
-    return await BookmarkModel.find();
+export const getAllBookmarks = async () =>{
+    const data = await BookmarkModel.find();
+    // console.log("data from getALlBookmarks = " , data);
+    return data;
 }
 
-const getBookmark = async (id) =>{
+export const getBookmark = async (id) =>{
 
     return await BookmarkModel.findById(id);
 }
