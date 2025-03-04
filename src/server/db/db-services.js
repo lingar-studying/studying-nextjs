@@ -94,11 +94,12 @@ export const createInitData = async () => {
 
 
 const getAllBookmarks = async () =>{
-
+    return await BookmarkModel.find();
 }
 
 const getBookmark = async (id) =>{
 
+    return await BookmarkModel.findById(id);
 }
 
 // const addStockToDb = new StockModel(stock);
@@ -112,9 +113,13 @@ export const createBookmark = async (bookmark) => {
 
 export const updateBookmark = async (bookmark) => {
 
+    const updatedBookMark = new BookmarkModel(bookmark);
+    return await updatedBookMark.save();
 }
 
 export const deleteBookmark = async(id) =>{
+    const toDelete = await BookmarkModel.findById(id);
+    await toDelete.deleteOne();
 
 }
 
