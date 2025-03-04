@@ -4,7 +4,7 @@ import {generateId} from "../../pages/bookmark-app/mock-data-bookmarks"; // Fix 
 import {mockBookmarks} from "../../pages/bookmark-app/mock-data-bookmarks";
 //general configuration
 const DATABASE_NAME = "BookmarksApp";
-const MONGO_URI = "mongodb://lingar:12345672228@localhost:27017/" + DATABASE_NAME + "?authSource=admin";
+const MONGO_URI = "mongodb://lingar:12345678@localhost:27017/" + DATABASE_NAME + "?authSource=admin";
 
 const BookmarkSchemaShape = {
     bookName: String,
@@ -23,41 +23,13 @@ let BookmarkModel = null;
 let bookmarkScheme = null;
 
 let cached = global.mongoose || {conn: null, promise: null};
-//old
-export async function connectToDatabase() {
-    if (cached.conn) return cached.conn; // Return cached connection if available
-    console.log("working? ")
-    if (!cached.promise) {
-        cached.promise = mongoose
-            .connect(MONGO_URI, {
-                useNewUrlParser: true,
-                useUnifiedTopology: true,
-            })
-            .then((mongoose) => mongoose).catch((error) => {
-                console.error("Error connecting to MongoDB:", error);
-                throw new Error("Failed to connect to MongoDB lingar");
-            });
-    }
-
-    cached.conn = await cached.promise;
-    global.mongoose = cached; // Save cache globally
-
-    console.log("Connected to MongoDB");
-    return cached.conn;
-}
-
-//traditinal
-export const connectDBOLD = () => {
-    mongoose.connect(MONGO_URI)//mongodb://lingar:12345678@localhost:27017 - without password: mongodb://localhost:27017
-        .then(() => console.log("db connected by mongoose"))
-        .catch((e) => {
-            console.log("Error in mongoose connection", e);
-            throw ("error on mongoose")
-        });
-}
 
 let isConnected = false;
 
+
+
+
+//Initial connection to DB
 export const connectDB2 = async (uri, callback) => {
     if (isConnected) return;
 
@@ -78,6 +50,8 @@ export const connectDB2 = async (uri, callback) => {
 
     }
 };
+
+//init bookmarks if not exist
 export const createInitData = async () => {
 
     //create DB - if not exist - happens from the connection URI
@@ -116,4 +90,66 @@ export const createInitData = async () => {
         console.log('Data inserted successfully!');
     }
 
+}
+
+
+const getAllBookmarks = async () =>{
+
+}
+
+const getBookmark = async (id) =>{
+
+}
+
+// const addStockToDb = new StockModel(stock);
+// return  addStockToDb.save();
+export const createBookmark = async (bookmark) => {
+
+    const newBookmarkItem = new BookmarkModel(bookmark);
+    return await newBookmarkItem.save();
+}
+
+
+export const updateBookmark = async (bookmark) => {
+
+}
+
+export const deleteBookmark = async(id) =>{
+
+}
+
+//for studying:
+
+
+//old
+export async function connectToDatabase() {
+    if (cached.conn) return cached.conn; // Return cached connection if available
+    console.log("working? ")
+    if (!cached.promise) {
+        cached.promise = mongoose
+            .connect(MONGO_URI, {
+                useNewUrlParser: true,
+                useUnifiedTopology: true,
+            })
+            .then((mongoose) => mongoose).catch((error) => {
+                console.error("Error connecting to MongoDB:", error);
+                throw new Error("Failed to connect to MongoDB lingar");
+            });
+    }
+
+    cached.conn = await cached.promise;
+    global.mongoose = cached; // Save cache globally
+
+    console.log("Connected to MongoDB");
+    return cached.conn;
+}
+
+//traditinal
+export const connectDBOLD = () => {
+    mongoose.connect(MONGO_URI)//mongodb://lingar:12345678@localhost:27017 - without password: mongodb://localhost:27017
+        .then(() => console.log("db connected by mongoose"))
+        .catch((e) => {
+            console.log("Error in mongoose connection", e);
+            throw ("error on mongoose")
+        });
 }
