@@ -3,7 +3,7 @@
 import {bookmarksMockServer} from "../../server/bookmarks/bookmarks-mock-server";
 import {generateId} from "../bookmark-app/mock-data-bookmarks";
 import {getAllMemoryUsageSpans} from "next/dist/lib/memory/trace";
-import {createBookmark, getAllBookmarks} from "../../server/db/db-services";
+import {createBookmark, getAllBookmarks, updateBookmark as updateBookmarkDb} from "../../server/db/db-services";
 
 // import {connectDB} from  '@/server/db/db-services';
 
@@ -44,12 +44,11 @@ export default async function handler(req, res) {
 //   bookmarksMockServer.push(newBookmark);
 //   return newBookmark;
 // }
-const updateBookmark = (updatedBookmark)=>{
-  const idx = bookmarksMockServer.findIndex(item=> item.id === updatedBookmark.id);
-  bookmarksMockServer[idx] = updatedBookmark;
+const updateBookmark = async (updatedBookmark)=>{
+
   //console.log("idx = " + idx);
 
-  return updatedBookmark;
+  return await  updateBookmarkDb(updatedBookmark);
 }
 const deleteBookmark = (id) =>{
 

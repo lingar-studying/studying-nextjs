@@ -114,9 +114,32 @@ export const createBookmark = async (bookmark) => {
 
 
 export const updateBookmark = async (bookmark) => {
+    console.log("bookmark = ", bookmark);
 
-    const updatedBookMark = new BookmarkModel(bookmark);
-    return await updatedBookMark.save();
+    let BookmarkModel2;
+    try {
+        BookmarkModel2 = mongoose.model('bookmarks'); // Try to access the model
+    } catch (err) {
+        // If the model doesn't exist, create it
+        BookmarkModel2 = mongoose.model('bookmarks', bookmarkScheme);
+    }
+
+    // delete bookmark.currentPage;//possible to pass only required update properties.
+    try {
+        const result = await BookmarkModel2.updateOne(
+            { _id: bookmark._id }, // Find by ID
+            { $set: bookmark } // Use $set to update the fields
+        );
+
+        if (result.nModified === 0) {
+            throw new Error('Bookmark not found or no changes made');
+        }
+
+        return result;
+    } catch (error) {
+        console.error('Error updating bookmark:', error);
+        throw error;
+    }
 }
 
 export const deleteBookmark = async(id) =>{

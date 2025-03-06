@@ -30,10 +30,10 @@ const BookmarksDatabase = () => {
         comment: "",
         isActiveLast2Weeks: false
     });
-    const [updatedId, setUpdatedId] = useState(-1);
+    const [updatedId, setUpdatedId] = useState();
 
 
-    const [deletedId, setDeletedId] = useState(-1);
+    const [deletedId, setDeletedId] = useState("");
 
     const [dbConnected, setDbConnected] = useState(true);
     console.log("data = ", data)
@@ -66,7 +66,7 @@ const BookmarksDatabase = () => {
             });
 
             setItemState({
-                // id: -1,
+                 id: "",
                 bookName: "",
                 sectionNum: 0,
                 currentPage: 0,
@@ -97,9 +97,10 @@ const BookmarksDatabase = () => {
     }
 
     const updateBookmark = async () => {
+        console.log("update booknart")
         try {
             // Perform a POST request using fetch
-            const response = await fetch('/api/bookmark', {
+            const response = await fetch('/api/bookmark-db', {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json', // specify content type
@@ -108,7 +109,7 @@ const BookmarksDatabase = () => {
             });
 
             setItemState({
-                id: -1,
+                id:"",
                 bookName: "",
                 sectionNum: 0,
                 currentPage: 0,
@@ -124,7 +125,7 @@ const BookmarksDatabase = () => {
 
             // Parse the JSON response
             //const result = await response.json();
-            setUpdatedId(-1);
+            setUpdatedId("");
 
 
         } catch (err) {
@@ -151,10 +152,12 @@ const BookmarksDatabase = () => {
                         'Content-Type': 'application/json', // specify content type
                     },
                 });
-                if(!response.ok) throw ("");
+                if(!response.ok) throw ("avs");
 
                 const tempResponse = await fetch("/api/bookmark-db");
-                const tempData = await tempResponse.json();
+                let tempData = await tempResponse.json();
+
+                tempData = tempData.map(item=>({...item, id: item._id}));
                 // console.log("temp = ", tempData)
                 setData(tempData);
                 console.log("COnnected from component")
@@ -169,31 +172,16 @@ const BookmarksDatabase = () => {
 
     }, [dataChanged]);
 
-    // useEffect(() => {
-    //     // const tempData = mockBookmarks;
-    //     const fetchBookmarks = async () => {
-    //         try {
-    //             //you can use here axios too.....
-    //             const response = await fetch('/api/bookmark'); // כתובת ה-API
-    //             const data = await response.json();
-    //             setData(data); // שמירת הנתונים
-    //         } catch (error) {
-    //             alert('Error fetching bookmarks'); // טיפול בשגיאות
-    //         } finally {
-    //             // setLoading(false); // סיום טעינה
-    //         }
-    //     };
-    //     fetchBookmarks();
-    //
-    // }, [dataChanged]);
-
     useEffect(() => {
-        if (updatedId >= 0) {
-            const temp = data.filter(item => item.id === updatedId)[0];
+        if (updatedId !== "") {
+            let temp = data.filter(item => item._id === updatedId)[0];
+            if(temp == null)return;
+            console.log("temp ", temp);
+            temp.isActiveLast2Weeks = temp.isActiveLast2Weeks === "true";
             setItemState(temp);
         } else {
             setItemState({
-                id: -1,
+                id: "",
                 bookName: "",
                 sectionNum: 0,
                 currentPage: 0,
@@ -236,7 +224,7 @@ const BookmarksDatabase = () => {
                     // setError(err.message);
                     console.error('Error:', err);
                 } finally {
-                    setDeletedId(-1);
+                    setDeletedId("");
                 }
             }
             deleteBookmark();
@@ -256,7 +244,7 @@ const BookmarksDatabase = () => {
      */
     return (
         <>
-
+            <p>updated id = {updatedId}</p>
             <p>{dbConnected + ""}</p>
             {dbConnected != true && <p>DB isn't connected! </p>}
             <Box component={"h2"} sx={{color: "info.main"}}>Bookmarks - With
@@ -366,8 +354,12 @@ const BookmarksDatabase = () => {
                 {data.map((item, idx) => {
                     return <Card sx={{width: 275, margin: "15px  auto"}}
                                  key={idx + item.id}>
-                        <Link href={`/bookmark-app/${item.id}`} passHref>
                             <CardContent>
+
+                                <Link href={`/bookmark-app/${item.id}`} passHref >
+
+                                    open in new page
+                                </Link>
                                 <Typography gutterBottom sx={{
                                     color: 'text.secondary',
                                     fontSize: 14
@@ -477,10 +469,10 @@ const BookmarksDatabase = () => {
 
                                 </Typography>
                             </CardContent>
-                        </Link>
+
                         <CardActions>
                             <Button size="small"
-                                    onClick={() => (updatedId !== item.id ? setUpdatedId(item.id) : setUpdatedId(-1))}
+                                    onClick={() => (updatedId !== item.id ? setUpdatedId(item.id) : setUpdatedId(""))}
 
                             >{updatedId === item.id ? "Cancel" : "Update Bookmark"}</Button>
                             {updatedId === item.id &&
