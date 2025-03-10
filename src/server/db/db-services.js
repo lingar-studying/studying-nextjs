@@ -94,7 +94,16 @@ export const createInitData = async () => {
 
 
 export const getAllBookmarks = async () =>{
-    const data = await BookmarkModel.find();
+
+
+    let BookmarkModel2;
+    try {
+        BookmarkModel2 = mongoose.model('bookmarks'); // Try to access the model
+    } catch (err) {
+        // If the model doesn't exist, create it
+        BookmarkModel2 = mongoose.model('bookmarks', bookmarkScheme);
+    }
+    const data = await BookmarkModel2.find();
     // console.log("data from getALlBookmarks = " , data);
     return data;
 }
