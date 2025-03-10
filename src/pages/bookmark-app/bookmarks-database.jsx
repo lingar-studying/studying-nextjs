@@ -30,7 +30,7 @@ const BookmarksDatabase = () => {
         comment: "",
         isActiveLast2Weeks: false
     });
-    const [updatedId, setUpdatedId] = useState();
+    const [updatedId, setUpdatedId] = useState("");
 
 
     const [deletedId, setDeletedId] = useState("");
@@ -194,18 +194,17 @@ const BookmarksDatabase = () => {
     }, [updatedId]);
 
     useEffect(() => {
-        if (deletedId >= 0) {
-            console.log("heppn")
+        if (deletedId != "") {
+            console.log("delete bookmark")
             const deleteBookmark = async () => {
                 try {
                     // Perform a POST request using fetch
-                    const response = await fetch('/api/bookmark', {
+                    const response = await fetch('/api/bookmark-db', {
                         method: 'DELETE',
                         headers: {
-                            // 'Content-Type': 'application/json', // specify content type
-                            'Content-Type': 'text/plain'
+
                         },
-                        body: JSON.stringify(deletedId), // send 'id' as a JSON string
+                        body: deletedId, // send 'id' as a JSON string
                     });
 
                     // Check if the response is successful
@@ -252,7 +251,7 @@ const BookmarksDatabase = () => {
             <>
                 <Button color={"primary"} variant="contained"
                         onClick={() => setShowCreateItem(!showCreateItem)}
-                        disabled={updatedId >= 0}>
+                        disabled={updatedId != ""}>
                     {showCreateItem ? "close" : "Create new book mark"}
                 </Button>
                 {showCreateItem &&

@@ -117,7 +117,14 @@ export const getBookmark = async (id) =>{
 // return  addStockToDb.save();
 export const createBookmark = async (bookmark) => {
 
-    const newBookmarkItem = new BookmarkModel(bookmark);
+    let BookmarkModel2;
+    try {
+        BookmarkModel2 = mongoose.model('bookmarks'); // Try to access the model
+    } catch (err) {
+        // If the model doesn't exist, create it
+        BookmarkModel2 = mongoose.model('bookmarks', bookmarkScheme);
+    }
+    const newBookmarkItem = new BookmarkModel2(bookmark);
     return await newBookmarkItem.save();
 }
 
@@ -152,9 +159,21 @@ export const updateBookmark = async (bookmark) => {
 }
 
 export const deleteBookmark = async(id) =>{
-    const toDelete = await BookmarkModel.findById(id);
+
+
+    console.log("id = ", id)
+
+    let BookmarkModel2;
+    try {
+        BookmarkModel2 = mongoose.model('bookmarks'); // Try to access the model
+    } catch (err) {
+        // If the model doesn't exist, create it
+        BookmarkModel2 = mongoose.model('bookmarks', bookmarkScheme);
+    }
+    const toDelete = await BookmarkModel2.findById(id);
     await toDelete.deleteOne();
 
+    // return {success: true};
 }
 
 //for studying:

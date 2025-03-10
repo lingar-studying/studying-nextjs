@@ -3,7 +3,8 @@
 import {bookmarksMockServer} from "../../server/bookmarks/bookmarks-mock-server";
 import {generateId} from "../bookmark-app/mock-data-bookmarks";
 import {getAllMemoryUsageSpans} from "next/dist/lib/memory/trace";
-import {createBookmark, getAllBookmarks, updateBookmark as updateBookmarkDb} from "../../server/db/db-services";
+import {createBookmark, getAllBookmarks, updateBookmark as updateBookmarkDb
+, deleteBookmark} from "../../server/db/db-services";
 
 // import {connectDB} from  '@/server/db/db-services';
 
@@ -31,6 +32,7 @@ export default async function handler(req, res) {
   }
   if (req.method === 'DELETE') {
 
+    console.log("req.body ", req.body)
     const data = deleteBookmark(req.body);
     res.status(200).json(data);
   }
@@ -49,15 +51,4 @@ const updateBookmark = async (updatedBookmark)=>{
   //console.log("idx = " + idx);
 
   return await  updateBookmarkDb(updatedBookmark);
-}
-const deleteBookmark = (id) =>{
-
-
-
-  const idx = bookmarksMockServer.findIndex(item=> item.id === +id);//U need to convert to number since it's came as string.
-  console.log("idx (see on node teminal)= " + idx)
-
-  bookmarksMockServer.splice(idx, 1);
-
-  return true;
 }
