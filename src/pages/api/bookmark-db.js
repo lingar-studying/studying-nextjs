@@ -1,7 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 
 import {bookmarksMockServer} from "../../server/bookmarks/bookmarks-mock-server";
-import {generateId} from "../bookmark-app/mock-data-bookmarks";
+import {generateId} from "@/server/bookmarks/bookmark-app/mock-data-bookmarks";
 import {getAllMemoryUsageSpans} from "next/dist/lib/memory/trace";
 import {createBookmark, getAllBookmarks, updateBookmark as updateBookmarkDb
 , deleteBookmark} from "../../server/db/db-services";

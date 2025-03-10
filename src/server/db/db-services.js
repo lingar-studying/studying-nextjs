@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
-import {generateId} from "../../pages/bookmark-app/mock-data-bookmarks"; // Fix the import
+import {generateId} from "@/server/bookmarks/bookmark-app/mock-data-bookmarks"; // Fix the import
 // const mongoose = require("mongoose");
-import {mockBookmarks} from "../../pages/bookmark-app/mock-data-bookmarks";
+import {mockBookmarks} from "@/server/bookmarks/bookmark-app/mock-data-bookmarks";
 //general configuration
 const DATABASE_NAME = "BookmarksApp";
 const MONGO_URI = "mongodb://lingar:12345678@localhost:27017/" + DATABASE_NAME + "?authSource=admin";

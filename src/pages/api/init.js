@@ -1,4 +1,3 @@
-import {do1} from "../../lib/a";
 
 export default function handler(req, res) {
 

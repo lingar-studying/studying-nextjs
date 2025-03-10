@@ -15,8 +15,9 @@ import {
     Typography
 } from "@mui/material";
 import Link from "next/dist/client/app-dir/link";
+import {OpenInNew} from "@mui/icons-material";
 
-const BookmarksDatabase = () => {
+const BookmarksServer = () => {
     const [data, setData] = useState([]);
 
     const [showCreateItem, setShowCreateItem] = useState(false);
@@ -30,13 +31,12 @@ const BookmarksDatabase = () => {
         comment: "",
         isActiveLast2Weeks: false
     });
-    const [updatedId, setUpdatedId] = useState("");
+    const [updatedId, setUpdatedId] = useState(-1);
 
 
-    const [deletedId, setDeletedId] = useState("");
+    const [deletedId, setDeletedId] = useState(-1);
 
-    const [dbConnected, setDbConnected] = useState(true);
-    console.log("data = ", data)
+
     const changeItem = (ev) => {
         let {value, name} = ev.target;
 
@@ -52,12 +52,11 @@ const BookmarksDatabase = () => {
 
 
     const addBookmark = async () => {
-        const temp = {...itemState};
-        console.log("asdasd")
+        const temp = {...itemState, id: generateId()};
 
         try {
             // Perform a POST request using fetch
-            const response = await fetch('/api/bookmark-db', {
+            const response = await fetch('/api/bookmark', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json', // specify content type
@@ -66,7 +65,7 @@ const BookmarksDatabase = () => {
             });
 
             setItemState({
-                 id: "",
+                id: -1,
                 bookName: "",
                 sectionNum: 0,
                 currentPage: 0,
@@ -97,10 +96,9 @@ const BookmarksDatabase = () => {
     }
 
     const updateBookmark = async () => {
-        console.log("update booknart")
         try {
             // Perform a POST request using fetch
-            const response = await fetch('/api/bookmark-db', {
+            const response = await fetch('/api/bookmark', {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json', // specify content type
@@ -109,7 +107,7 @@ const BookmarksDatabase = () => {
             });
 
             setItemState({
-                id:"",
+                id: -1,
                 bookName: "",
                 sectionNum: 0,
                 currentPage: 0,
@@ -125,7 +123,7 @@ const BookmarksDatabase = () => {
 
             // Parse the JSON response
             //const result = await response.json();
-            setUpdatedId("");
+            setUpdatedId(-1);
 
 
         } catch (err) {
@@ -140,48 +138,31 @@ const BookmarksDatabase = () => {
     //Effects
 
     //on init
-
     useEffect(() => {
-
-        const connectToDb = async () => {
+        // const tempData = mockBookmarks;
+        const fetchBookmarks = async () => {
             try {
-                // Perform a POST request using fetch
-                const response = await fetch('/api/connect-db', {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json', // specify content type
-                    },
-                });
-                if(!response.ok) throw ("avs");
-
-                const tempResponse = await fetch("/api/bookmark-db");
-                let tempData = await tempResponse.json();
-
-                tempData = tempData.map(item=>({...item, id: item._id}));
-                // console.log("temp = ", tempData)
-                setData(tempData);
-                console.log("COnnected from component")
-            } catch (err) {
-                // Handle any error
-
-                console.error('Error on component trying to connect db:\n', err);
-                setDbConnected(false);
+                //you can use here axios too.....
+                const response = await fetch('/api/bookmark'); // כתובת ה-API
+                const data = await response.json();
+                setData(data); // שמירת הנתונים
+            } catch (error) {
+                alert('Error fetching bookmarks'); // טיפול בשגיאות
+            } finally {
+                // setLoading(false); // סיום טעינה
             }
-        }
-        connectToDb();
+        };
+        fetchBookmarks();
 
     }, [dataChanged]);
 
     useEffect(() => {
-        if (updatedId !== "") {
-            let temp = data.filter(item => item._id === updatedId)[0];
-            if(temp == null)return;
-            console.log("temp ", temp);
-            temp.isActiveLast2Weeks = temp.isActiveLast2Weeks === "true";
+        if (updatedId >= 0) {
+            const temp = data.filter(item => item.id === updatedId)[0];
             setItemState(temp);
         } else {
             setItemState({
-                id: "",
+                id: -1,
                 bookName: "",
                 sectionNum: 0,
                 currentPage: 0,
@@ -194,17 +175,18 @@ const BookmarksDatabase = () => {
     }, [updatedId]);
 
     useEffect(() => {
-        if (deletedId != "") {
-            console.log("delete bookmark")
+        if (deletedId >= 0) {
+            console.log("heppn")
             const deleteBookmark = async () => {
                 try {
                     // Perform a POST request using fetch
-                    const response = await fetch('/api/bookmark-db', {
+                    const response = await fetch('/api/bookmark', {
                         method: 'DELETE',
                         headers: {
-
+                            // 'Content-Type': 'application/json', // specify content type
+                            'Content-Type': 'text/plain'
                         },
-                        body: deletedId, // send 'id' as a JSON string
+                        body: JSON.stringify(deletedId), // send 'id' as a JSON string
                     });
 
                     // Check if the response is successful
@@ -223,7 +205,7 @@ const BookmarksDatabase = () => {
                     // setError(err.message);
                     console.error('Error:', err);
                 } finally {
-                    setDeletedId("");
+                    setDeletedId(-1);
                 }
             }
             deleteBookmark();
@@ -243,15 +225,12 @@ const BookmarksDatabase = () => {
      */
     return (
         <>
-            <p>updated id = {updatedId}</p>
-            <p>{dbConnected + ""}</p>
-            {dbConnected != true && <p>DB isn't connected! </p>}
-            <Box component={"h2"} sx={{color: "info.main"}}>Bookmarks - With
-                Database</Box>
+            <Box component={"h2"} sx={{color: "error.main"}}>Bookmarks - With
+                Server</Box>
             <>
                 <Button color={"primary"} variant="contained"
                         onClick={() => setShowCreateItem(!showCreateItem)}
-                        disabled={updatedId != ""}>
+                        disabled={updatedId >= 0}>
                     {showCreateItem ? "close" : "Create new book mark"}
                 </Button>
                 {showCreateItem &&
@@ -339,7 +318,7 @@ const BookmarksDatabase = () => {
 
             <h2>For testing</h2>
             {data.map((item, idx) => {
-                return <p key={item.id}>#{item._id}-Book Name = {item.bookName},
+                return <p key={item.id}>#{item.id}-Book Name = {item.bookName},
                     Section {item.sectionNum},
                     page {item.currentPage},
                     {item.isActiveLast2Weeks ? "Well Done" : "Take some time for this"}
@@ -353,12 +332,11 @@ const BookmarksDatabase = () => {
                 {data.map((item, idx) => {
                     return <Card sx={{width: 275, margin: "15px  auto"}}
                                  key={idx + item.id}>
+
+                        <Link href={`/src/server/bookmarks/bookmark-app/${item.id}`} passHref>
+                                        <IconButton><OpenInNew/></IconButton>
+                        </Link>
                             <CardContent>
-
-                                <Link href={`/bookmark-app/${item.id}?db=true`} passHref >
-
-                                    open in new page
-                                </Link>
                                 <Typography gutterBottom sx={{
                                     color: 'text.secondary',
                                     fontSize: 14
@@ -469,9 +447,10 @@ const BookmarksDatabase = () => {
                                 </Typography>
                             </CardContent>
 
+
                         <CardActions>
                             <Button size="small"
-                                    onClick={() => (updatedId !== item.id ? setUpdatedId(item.id) : setUpdatedId(""))}
+                                    onClick={() => (updatedId !== item.id ? setUpdatedId(item.id) : setUpdatedId(-1))}
 
                             >{updatedId === item.id ? "Cancel" : "Update Bookmark"}</Button>
                             {updatedId === item.id &&
@@ -498,4 +477,4 @@ const BookmarksDatabase = () => {
 }
 //do you see good now?
 
-export default BookmarksDatabase;
+export default BookmarksServer;
