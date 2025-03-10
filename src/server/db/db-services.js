@@ -109,8 +109,14 @@ export const getAllBookmarks = async () =>{
 }
 
 export const getBookmark = async (id) =>{
-
-    return await BookmarkModel.findById(id);
+    let BookmarkModel2;
+    try {
+        BookmarkModel2 = mongoose.model('bookmarks'); // Try to access the model
+    } catch (err) {
+        // If the model doesn't exist, create it
+        BookmarkModel2 = mongoose.model('bookmarks', bookmarkScheme);
+    }
+    return await BookmarkModel2.findById(id);
 }
 
 // const addStockToDb = new StockModel(stock);

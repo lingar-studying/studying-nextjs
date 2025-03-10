@@ -15,6 +15,7 @@ import {
     Typography
 } from "@mui/material";
 import Link from "next/dist/client/app-dir/link";
+import {OpenInNew} from "@mui/icons-material";
 
 const BookmarksServer = () => {
     const [data, setData] = useState([]);
@@ -331,7 +332,10 @@ const BookmarksServer = () => {
                 {data.map((item, idx) => {
                     return <Card sx={{width: 275, margin: "15px  auto"}}
                                  key={idx + item.id}>
+
                         <Link href={`/bookmark-app/${item.id}`} passHref>
+                                        <IconButton><OpenInNew/></IconButton>
+                        </Link>
                             <CardContent>
                                 <Typography gutterBottom sx={{
                                     color: 'text.secondary',
@@ -442,7 +446,8 @@ const BookmarksServer = () => {
 
                                 </Typography>
                             </CardContent>
-                        </Link>
+
+
                         <CardActions>
                             <Button size="small"
                                     onClick={() => (updatedId !== item.id ? setUpdatedId(item.id) : setUpdatedId(-1))}

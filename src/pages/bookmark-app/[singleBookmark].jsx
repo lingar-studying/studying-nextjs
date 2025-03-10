@@ -10,7 +10,7 @@ const SingleBookmark = () => {
     console.log("router = ", router);
 
     const [bookmark, setBookmark] = useState({});
-    const {singleBookmark} = router.query;
+    const {singleBookmark, db} = router.query;
     const handleBack = () => {
         router.back(); // Go back to the previous page in history
     };
@@ -24,7 +24,16 @@ const SingleBookmark = () => {
 
                 try {
                     //you can use here axios too.....
-                    const response = await fetch('/api/bookmark/' + singleBookmark); // כתובת ה-API
+                    let response = null;
+                    console.log("db = ", db)
+                    if(db != null){
+                        response = await fetch('/api/bookmark-db/' + singleBookmark); // כתובת ה-API
+
+                    }
+                    else{
+                        response = await fetch('/api/bookmark/' + singleBookmark); // כתובת ה-API
+
+                    }
                     const data = await response.json();
                     setBookmark(data); // שמירת הנתונים
                 } catch (error) {
