@@ -10,5 +10,5 @@ const Example = () => {
             <h1>Hi I am draft</h1>
         </>
     )
-}
+}//
 export default Example;
