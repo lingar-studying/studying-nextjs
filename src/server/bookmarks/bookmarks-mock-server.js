@@ -1,7 +1,7 @@
 import {
     generateId,
     mockBookmarks
-} from "@/server/bookmarks/bookmark-app/mock-data-bookmarks";
+} from "./mock-data-bookmarks";
 
 export let bookmarksMockServer = [...mockBookmarks];
 bookmarksMockServer.push({

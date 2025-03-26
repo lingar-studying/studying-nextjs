@@ -1,4 +1,6 @@
 //like on init server
+//for run production:
+//
 
 export async function register() {
     console.log("Starting Server")
