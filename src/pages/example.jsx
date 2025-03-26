@@ -1,4 +1,5 @@
 import React from "react";
+import DontShowMe from "@/pages/dont-show-me";
 
 // export default function Draft (){
 // }
