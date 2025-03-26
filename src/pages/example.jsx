@@ -7,7 +7,8 @@ const Example = () => {
 
     return (
         <>
-            <h1>Hi I am draft</h1>
+            <h1>Hi I am Example</h1>
+            <DontShowMe/>
         </>
     )
 }////
