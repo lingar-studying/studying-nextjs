@@ -355,7 +355,7 @@ const BookmarksDatabase = () => {
                                  key={idx + item.id}>
                             <CardContent>
 
-                                <Link href={`/src/server/bookmarks/bookmark-app/${item.id}?db=true`} passHref >
+                                <Link href={`/bookmark-app/${item.id}?db=true`} passHref >
 
                                     open in new page
                                 </Link>

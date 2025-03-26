@@ -333,7 +333,7 @@ const BookmarksServer = () => {
                     return <Card sx={{width: 275, margin: "15px  auto"}}
                                  key={idx + item.id}>
 
-                        <Link href={`/src/server/bookmarks/bookmark-app/${item.id}`} passHref>
+                        <Link href={`/bookmark-app/${item.id}`} passHref>
                                         <IconButton><OpenInNew/></IconButton>
                         </Link>
                             <CardContent>

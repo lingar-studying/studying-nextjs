@@ -17,13 +17,13 @@ const MainLayout = ({children})=> (<>
             <Link href="/draft-area">Draft-area</Link>
         </li>
         <li>
-            <Link href="/src/server/bookmarks/bookmark-app/bookmarks-client">My Bookmarks - Only Client</Link>
+            <Link href="/bookmark-app/bookmarks-client">My Bookmarks - Only Client</Link>
         </li>
         <li>
-            <Link href="/src/server/bookmarks/bookmark-app/bookmarks-server">My Bookmarks - with server</Link>
+            <Link href="/bookmark-app/bookmarks-server">My Bookmarks - with server</Link>
         </li>
         <li>
-            <Link href="/src/server/bookmarks/bookmark-app/bookmarks-database">My Bookmarks - with Database</Link>
+            <Link href="/bookmark-app/bookmarks-database">My Bookmarks - with Database</Link>
         </li>
         <li>
             <Link href="/dont-show-me">Don't show me</Link>
