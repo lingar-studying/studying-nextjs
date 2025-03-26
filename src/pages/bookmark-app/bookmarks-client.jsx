@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {generateId, mockBookmarks} from "./mock-data-bookmarks";
+import {generateId, mockBookmarks} from "../../server/bookmarks/mock-data-bookmarks";
 import DeleteIcon from '@mui/icons-material/Delete';
 
 import {

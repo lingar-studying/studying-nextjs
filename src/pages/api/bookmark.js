@@ -2,7 +2,7 @@
 
 import {bookmarksMockServer} from "../../server/bookmarks/bookmarks-mock-server";
 import {Bookmark} from "@mui/icons-material";
-import {generateId, mockBookmarks} from "../bookmark-app/mock-data-bookmarks";
+import {generateId, mockBookmarks} from "../../server/bookmarks/mock-data-bookmarks";
 
 export default function handler(req, res) {
   if (req.method === 'GET') {

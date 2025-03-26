@@ -1,7 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 
 import {bookmarksMockServer} from "../../server/bookmarks/bookmarks-mock-server";
-import {generateId} from "../bookmark-app/mock-data-bookmarks";
+import {generateId} from "../../server/bookmarks/mock-data-bookmarks";
 import {connectDB2} from '../../server/db/db-services';
 
 export default async function handler(req, res) {
