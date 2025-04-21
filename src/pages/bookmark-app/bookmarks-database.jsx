@@ -177,7 +177,7 @@ const BookmarksDatabase = () => {
             let temp = data.filter(item => item._id === updatedId)[0];
             if(temp == null)return;
             console.log("temp ", temp);
-            temp.isActiveLast2Weeks = temp.isActiveLast2Weeks === "true";
+            // temp.isActiveLast2Weeks = temp.isActiveLast2Weeks === "true";
             setItemState(temp);
         } else {
             setItemState({
@@ -368,7 +368,7 @@ const BookmarksDatabase = () => {
                                         <FormControlLabel
                                             control={
                                                 <Checkbox
-                                                    checked={itemState.isActiveLast2Weeks}
+                                                    checked={itemState.isActiveLast2Weeks === true}
                                                     onChange={changeItem}
                                                     name="isActiveLast2Weeks"
 
@@ -378,8 +378,9 @@ const BookmarksDatabase = () => {
                                         />
                                         :
                                         <>{item.isActiveLast2Weeks ? "Well Done" : "Take some time for this"}</>
-                                    }
 
+
+                                    }
                                 </Typography>
                                 <Typography variant="h5" component="div">
 
