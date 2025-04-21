@@ -5,9 +5,9 @@ import {createUser, deleteUser, getAllUsers, updateUser} from "@/server/users/us
 export default async function handler(req, res) {
     if (req.method === 'GET') {
         try {
-            const data = createUser(req.body);
-
-            res.status(200).json(getAllUsers());
+            const data = await getAllUsers();
+            console.log("simple users = ", data);
+            res.status(200).json(data);
         }catch (error) {
 
             res.status(500).json(error);

@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import {connectDB2} from "@/server/db/db-services";
+import {simpleUserScheme} from "@/server/users/simple-user";
 
 export const getAllUsers = async () =>{
 
@@ -7,13 +8,13 @@ export const getAllUsers = async () =>{
     await connectDB2();
     let UserModel = null;
     try {
-        UserModel = mongoose.model('users'); // Try to access the model
+        UserModel = mongoose.model('simpleUsers'); // Try to access the model
     } catch (err) {
         // If the model doesn't exist, create it
-        // UserModel = mongoose.model('users', userScheme);
+        UserModel = mongoose.model('simpleUsers', simpleUserScheme);
 
         console.error("why this error? " , err);
-        throw err;
+
     }
     // console.log("data from getALlUsers = " , data);
     return UserModel.find();
@@ -22,7 +23,7 @@ export const getAllUsers = async () =>{
 export const getUser = async (id) =>{
     let UserModel;
     try {
-        UserModel = mongoose.model('users'); // Try to access the model
+        UserModel = mongoose.model('simpleUsers'); // Try to access the model
     } catch (err) {
 
         console.error("why this error? " , err);

@@ -23,3 +23,4 @@ export const SimpleUserScheme = {
 
 };
 
+export const simpleUserScheme = new mongoose.Schema(SimpleUserScheme);
