@@ -69,6 +69,9 @@ export const createInitData = async () => {
 
     const userExists = collections.some(item=> item.name === "simpleUsers");
 
+    if(!userExists) {
+        mongoose.model('simpleUsers', simpleUserScheme);
+    }
 
     try {
         BookmarkModel = mongoose.model('bookmarks'); // Try to access the model
