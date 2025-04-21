@@ -9,5 +9,7 @@ export async function register() {
 
     console.log("db  = " + process.env.db);
 
+    console.log("uuu = " + process.env.uuu);
+
 
 }
