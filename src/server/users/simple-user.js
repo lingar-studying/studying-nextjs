@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const UserScheme = {
+export const SimpleUserScheme = {
     username: {
         type: String,
         required: true,
@@ -22,3 +22,4 @@ const UserScheme = {
 
 
 };
+

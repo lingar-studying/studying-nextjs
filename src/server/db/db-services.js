@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import {generateId} from "../bookmarks/mock-data-bookmarks"; // Fix the import
 // const mongoose = require("mongoose");
 import {mockBookmarks} from "../bookmarks/mock-data-bookmarks";
+import {SimpleUserScheme} from "@/server/users/simple-user";
 //general configuration
 const DATABASE_NAME = "BookmarksApp";
 const MONGO_URI = "mongodb://lingar:12345678@localhost:27017/" + DATABASE_NAME + "?authSource=admin";
@@ -60,6 +61,9 @@ export const createInitData = async () => {
     const exist = collections.some(item=> item.name === "bookmarks");
     //creating scheme = shape of the collection to create
     bookmarkScheme = new mongoose.Schema(BookmarkSchemaShape);
+
+    //creating init SimpleUserScheme
+    const simpleUserScheme = new mongoose.Schema(SimpleUserScheme);
     //creating the collection
     // BookmarkModel = mongoose.model('bookmarks', bookmarkScheme);
 
@@ -181,6 +185,20 @@ export const deleteBookmark = async(id) =>{
 
     // return {success: true};
 }
+////////////////////*******END OF BOOKMARKS METHODS****////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //for studying:
 
