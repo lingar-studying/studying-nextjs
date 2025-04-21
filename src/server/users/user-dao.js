@@ -1,8 +1,10 @@
 import mongoose from "mongoose";
+import {connectDB2} from "@/server/db/db-services";
 
 export const getAllUsers = async () =>{
 
-
+    //in each head of method.
+    await connectDB2();
     let UserModel = null;
     try {
         UserModel = mongoose.model('users'); // Try to access the model
@@ -33,9 +35,13 @@ export const getUser = async (id) =>{
 // return  addStockToDb.save();
 export const createUser = async (user) => {
 
+
+    //in each head of method.
+    await connectDB2();
+
     let UserModel;
     try {
-        UserModel = mongoose.model('users'); // Try to access the model
+        UserModel = mongoose.model('simpleUsers'); // Try to access the model
     } catch (err) {
 
         console.error("why this error? " , err);
@@ -51,7 +57,7 @@ export const updateUser = async (user) => {
 
     let UserModel;
     try {
-        UserModel = mongoose.model('users'); // Try to access the model
+        UserModel = mongoose.model('simpleUsers'); // Try to access the model
     } catch (err) {
 
         console.error("why this error? " , err);
@@ -83,7 +89,7 @@ export const deleteUser = async(id) =>{
 
     let UserModel;
     try {
-        UserModel = mongoose.model('users'); // Try to access the model
+        UserModel = mongoose.model('simpleUsers'); // Try to access the model
     } catch (err) {
 
         console.error("why this error? " , err);

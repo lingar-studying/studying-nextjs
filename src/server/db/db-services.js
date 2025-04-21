@@ -67,9 +67,12 @@ export const createInitData = async () => {
     //creating the collection
     // BookmarkModel = mongoose.model('bookmarks', bookmarkScheme);
 
+    const userExists = collections.some(item=> item.name === "simpleUsers");
+
 
     try {
         BookmarkModel = mongoose.model('bookmarks'); // Try to access the model
+
     } catch (err) {
         // If the model doesn't exist, create it
         BookmarkModel = mongoose.model('bookmarks', bookmarkScheme);
