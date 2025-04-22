@@ -88,23 +88,29 @@ export const updateEntity = async (data, entityName, optionalScheme = null) => {
 
     // delete bookmark.currentPage;//possible to pass only required update properties.
     try {
-        const result = await EntityModel.updateOne(
-            { _id: data._id }, // Find by ID
-            { $set: data } // Use $set to update the fields
-        );
 
-        if (result.nModified === 0) {
-            throw new Error( entityName + ' Entity not found or no changes made');
+        //this working, but return the updated object
+        // const result = await EntityModel.updateOne(
+        //     { _id: data._id }, // Find by ID
+        //     { $set: data } // Use $set to update the fields
+        // );
+        const result = await EntityModel.findOneAndUpdate(
+            { _id: data._id },
+            { $set: data },
+            { new: true }
+        );
+        if (!result) {
+            throw new Error(entityName + ' not found');
         }
 
         return result;
     } catch (error) {
-        console.error('Error updating bookmark:', error);
+        //console.error('Error updating bookmark:', error);
         throw error;
     }
 }
 
-export const deleteBookmark = async(id, entityName, optionalScheme = null) =>{
+export const deleteEntity = async(id, entityName, optionalScheme = null) =>{
 
 
 
