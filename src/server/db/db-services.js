@@ -31,7 +31,7 @@ let isConnected = false;
 
 
 //Initial connection to DB
-export const connectDB2 = async (uri, callback) => {
+export const connectDB2 = async () => {
     if (isConnected) return;
 
     try {
