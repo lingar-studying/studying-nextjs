@@ -1,6 +1,7 @@
 import {createUser, deleteUser, getAllUsers, updateUser} from "@/server/users/user-dao";
 import {createEntity, deleteEntity, getAllEntities, updateEntity} from "@/server/db/generic-entity-dao";
 import mongoose from "mongoose";
+import {authorize} from "@/server/users/security-middleware";
 
 const entityName = "myStock";
 const stockSchema = mongoose.Schema({
@@ -21,12 +22,12 @@ const stockSchema = mongoose.Schema({
         type: Number,
         required: false
     },
-    // userOwner:{
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     required: true,
-    //     unique: false
-    //
-    // },
+    userOwner:{
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        unique: false
+
+    }
 
 
 
@@ -34,11 +35,24 @@ const stockSchema = mongoose.Schema({
 //simple user
 //Don't forget handler
 export default async function handler(req, res) {
+    console.log("sdsds")
+    let user = null;
+    try {
+        const result = authorize(req);
+        user = result;
+        console.log("Hi " + user.username);
+    }catch (error) {
+        console.error(error);
+        return res.status(500).json({error: error.message});
+    }
+
+
+
     if (req.method === 'GET') {
         try {
             const data = await getAllEntities(entityName, stockSchema);
             console.log((entityName +"s = "), data);
-            res.status(200).json(data);
+            return res.status(200).json(data);
         }catch (error) {
 
             res.status(500).json(error);
