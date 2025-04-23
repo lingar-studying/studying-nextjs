@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import cookie from 'cookie';
+import * as cookie from 'cookie';
 import * as logger from "next/dist/build/output/log";
 
 const SECRET = process.env.JWT_SECRET || "some-custom-your-secret-key"; //'mytestkey'; - won't work - the same key should come here....
