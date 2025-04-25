@@ -109,7 +109,7 @@ export const updateEntity = async (data, entityName, optionalScheme = null) => {
         throw error;
     }
 }
-
+//to pass: {"_id":"68093aa8cd34d55f46233c63"}
 export const deleteEntity = async(id, entityName, optionalScheme = null) =>{
 
 
@@ -128,8 +128,12 @@ export const deleteEntity = async(id, entityName, optionalScheme = null) =>{
         }
     }
     const toDelete = await EntityModel.findById(id);
-    await toDelete.deleteOne();
+    if (!toDelete) {
+        throw new Error("Item not found or not owned by user");
+    }
 
+    await toDelete.deleteOne();
+    return { success: true };
     // return {success: true};
 }
 ////////////////////*******END OF GENERAL ENTITIES METHODS****////////////////////////////////////////

@@ -111,7 +111,7 @@ export const updateEntityPerUser = async (id, data, entityName, optionalScheme =
         throw error;
     }
 }
-
+//to pass: {"_id":"68093aa8cd34d55f46233c63"}
 export const deleteEntityPerUser = async(userId, id, entityName, optionalScheme = null) =>{
 
 
