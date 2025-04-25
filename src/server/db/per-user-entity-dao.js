@@ -9,7 +9,7 @@ let cached = global.mongoose || {conn: null, promise: null};
 ////////////////////*******END OF GENERAL ENTITIES METHODS****////////////////////////////////////////
 
 
-export const getAllEntities = async (id, entityName, optionalScheme=null) =>{
+export const getAllEntitiesPerUser = async (id, entityName, optionalScheme=null) =>{
 
     await connectDB2();
 
@@ -26,7 +26,8 @@ export const getAllEntities = async (id, entityName, optionalScheme=null) =>{
 
         }
     }
-    const data = await EntityModel.findById(id);
+    const data = await EntityModel
+        .find({userOwner: id});
     // console.log("data from getALlBookmarks = " , data);
     return data;
 }
@@ -50,7 +51,7 @@ export const getEntity = async (entityName, id, optionalScheme = null) =>{
 
 
 // return  addStockToDb.save();
-export const createEntity = async (data, entityName, optionalScheme = null) => {
+export const createEntityPerUser = async (id, data, entityName, optionalScheme = null) => {
 
     let EntityModel;
     try {
@@ -65,12 +66,13 @@ export const createEntity = async (data, entityName, optionalScheme = null) => {
 
         }
     }
+    data = {...data, userOwner: id};
     const newItem = new EntityModel(data);
     return await newItem.save();
 }
 
 
-export const updateEntity = async (data, entityName, optionalScheme = null) => {
+export const updateEntityPerUser = async (id, data, entityName, optionalScheme = null) => {
 
     let EntityModel;
     try {
@@ -95,7 +97,7 @@ export const updateEntity = async (data, entityName, optionalScheme = null) => {
         //     { $set: data } // Use $set to update the fields
         // );
         const result = await EntityModel.findOneAndUpdate(
-            { _id: data._id },
+            { _id: data._id, userOwner: id },
             { $set: data },
             { new: true }
         );
@@ -110,7 +112,7 @@ export const updateEntity = async (data, entityName, optionalScheme = null) => {
     }
 }
 
-export const deleteEntity = async(id, entityName, optionalScheme = null) =>{
+export const deleteEntityPerUser = async(userId, id, entityName, optionalScheme = null) =>{
 
 
 
@@ -127,10 +129,19 @@ export const deleteEntity = async(id, entityName, optionalScheme = null) =>{
 
         }
     }
-    const toDelete = await EntityModel.findById(id);
-    await toDelete.deleteOne();
+    // const toDelete = await EntityModel.findById(id);
+    //MUST use _id and NOT id
+    const toDelete = await EntityModel.findOne({_id: id, userOwner: userId});
 
-    // return {success: true};
+    console.log("item = " , toDelete);
+
+    if (!toDelete) {
+        throw new Error("Item not found or not owned by user");
+    }
+
+    await toDelete.deleteOne();
+    return { success: true };
+
 }
 ////////////////////*******END OF GENERAL ENTITIES METHODS****////////////////////////////////////////
 
