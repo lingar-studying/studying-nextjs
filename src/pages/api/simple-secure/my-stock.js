@@ -41,7 +41,7 @@ const stockSchema = mongoose.Schema({
 //simple user
 //Don't forget handler
 export default async function handler(req, res) {
-    console.log("sdsds")
+    console.log("my-stock ws")
     let user = null;
     try {
         const result = authorize(req);
