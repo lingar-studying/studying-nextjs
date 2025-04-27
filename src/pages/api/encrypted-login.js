@@ -13,7 +13,7 @@ export default async function handler(req, res) {
         console.log("login user - ");
     try{
         const user = validateUser(req.body);
-
+        //should catch if
         if (user) {
             const token = jwt.sign({ id: user.id, username: user.username }, SECRET, {
                 expiresIn: "1h",
@@ -30,9 +30,7 @@ export default async function handler(req, res) {
             );
             res.status(200).json({ message: "Logged in" });
         }
-        // else {
-        //     throw new Error("aaa")
-        // }
+
 
     }catch (error) {
 
