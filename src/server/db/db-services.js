@@ -4,7 +4,7 @@ import {generateId} from "../bookmarks/mock-data-bookmarks"; // Fix the import
 import {mockBookmarks} from "../bookmarks/mock-data-bookmarks";
 import {SimpleUserScheme} from "@/server/users/simple-user";
 //general configuration
-const DATABASE_NAME = "BookmarksApp";
+const DATABASE_NAME = "STUDYING_NEXTJS";
 const MONGO_URI = "mongodb://lingar:12345678@localhost:27017/" + DATABASE_NAME + "?authSource=admin";
 
 const BookmarkSchemaShape = {
