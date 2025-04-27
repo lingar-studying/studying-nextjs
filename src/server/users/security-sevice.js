@@ -14,8 +14,9 @@ export const encryptPassword = async (password)=>{
 
 export const validateUser = async (user) => {
     //... fetch user from a db etc.
-    const allUsers = getAllEntities("encryptedUser")
+    const allUsers = getAllEntities("encryptedUser");
     const originalUser = allUsers.find((user) => user.name === user.name);
+
 
     if (!user) {
         throw new Error("User doesn't exist");
