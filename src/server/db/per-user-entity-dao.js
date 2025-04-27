@@ -29,7 +29,7 @@ export const getAllEntitiesPerUser = async (id, entityName, optionalScheme=null)
     return data;
 }
 
-export const getEntity = async (entityName, id, optionalScheme = null) =>{
+export const getEntityPerUser = async (userId, entityName, id, optionalScheme = null) =>{
     let EntityModel;
     try {
         EntityModel = mongoose.model(entityName); // Try to access the model
@@ -43,7 +43,10 @@ export const getEntity = async (entityName, id, optionalScheme = null) =>{
 
         }
     }
-    return EntityModel.findById(id);
+    const obj = await EntityModel.findOne({_id: id, userOwner: userId});
+    console.log("obj", obj);
+    return obj;// EntityModel.findOne({_id: id, userOwner: userId});
+
 }
 
 
