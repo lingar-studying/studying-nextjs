@@ -12,7 +12,7 @@ export default async function handler(req, res) {
     if (req.method === 'POST') {
         console.log("login user - ");
     try{
-        const user = validateUser(req.body);
+        const user =  await validateUser(req.body);
         //should catch if
         if (user) {
             const token = jwt.sign({ id: user.id, username: user.username }, SECRET, {
