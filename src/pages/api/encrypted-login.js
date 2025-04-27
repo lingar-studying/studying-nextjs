@@ -27,7 +27,7 @@ export default async function handler(req, res) {
                     httpOnly: true,
                     sameSite: "strict",
                     path: "/",
-                    maxAge: 3600,
+                    maxAge: 3600,//should be vs the expiresIn
                 })
             );
             res.status(200).json({ message: "Logged in" });
