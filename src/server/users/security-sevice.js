@@ -24,7 +24,7 @@ export const validateUser = async (user) => {
     const match = await bcrypt.compare(user.password, originalUser.password);
 
     if(match) {
-        return match;
+        return originalUser;
     }else{
         throw new Error("Credentials Wrong");
     }

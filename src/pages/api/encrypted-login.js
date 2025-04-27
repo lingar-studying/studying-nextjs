@@ -1,5 +1,4 @@
 import * as cookie from "cookie";
-import {getAllUsers} from "@/server/users/user-dao";
 import jwt from "jsonwebtoken";
 import {validateUser} from "@/server/users/security-sevice";
 
@@ -13,9 +12,9 @@ export default async function handler(req, res) {
     if (req.method === 'POST') {
         console.log("login user - ");
     try{
-        const valid = validateUser(req.body);
+        const user = validateUser(req.body);
 
-        if (valid) {
+        if (user) {
             const token = jwt.sign({ id: user.id, username: user.username }, SECRET, {
                 expiresIn: "1h",
             });
@@ -31,8 +30,13 @@ export default async function handler(req, res) {
             );
             res.status(200).json({ message: "Logged in" });
         }
+        // else {
+        //     throw new Error("aaa")
+        // }
 
     }catch (error) {
+
+        console.log(error, "on login..." );
         res.status(500).json({ error: error });
     }
 
