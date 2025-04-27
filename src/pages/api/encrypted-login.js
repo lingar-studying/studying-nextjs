@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import {validateUser} from "@/server/users/security-sevice";
 
 
-const SECRET = "encryptedSecret";
+const SECRET = "some-custom-your-secret-key";
 
 
 export default async function handler(req, res) {
@@ -12,7 +12,9 @@ export default async function handler(req, res) {
     if (req.method === 'POST') {
         console.log("login user - ");
     try{
-        const user =  await validateUser(req.body);
+        const user = await validateUser(req.body);
+
+        console.log("user null? ", (user ==null), user )
         //should catch if
         if (user) {
             const token = jwt.sign({ id: user.id, username: user.username }, SECRET, {
@@ -35,7 +37,7 @@ export default async function handler(req, res) {
     }catch (error) {
 
         console.log(error, "on login..." );
-        res.status(500).json({ error: error });
+        res.status(500).json({ error: error.message });
     }
 
 
