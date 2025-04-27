@@ -5,7 +5,8 @@ export default async function handler(req, res) {
 
     const entityName = "myItem";
     const { id } = req.query;
-     const item = await getEntity(id, entityName);//assuming that the model (the collection) exists
+    //Vice versa...
+     const item = await getEntity( entityName, id);//assuming that the model (the collection) exists
 
 
     if (req.method === 'GET') {
