@@ -33,9 +33,33 @@ providers: [
         }
     })
 ],
-    // session: {
-    //     strategy: "jwt",  // Using JWT strategy to store session
-    // }
-
+    cookies: {
+        sessionToken: {
+            name: "next-auth.session-token", // בלי הקידומת __Secure
+            options: {
+                httpOnly: true,
+                sameSite: "lax",
+                path: "/",
+                secure: false, // הכי חשוב – אחרת זה יחזור ל-__Secure
+            },
+        },
+    },
+    session: {
+        strategy: "jwt", // שימוש ב-JWT בלבד
+    },
+    callbacks: {
+        async jwt({ token, user }) {
+            if (user) {
+                token.id = user.id;
+                token.name = user.name;
+            }
+            return token;
+        },
+        async session({ session, token }) {
+            session.user.id = token.id;
+            session.user.name = token.name;
+            return session;
+        },
+    },
 
 });
