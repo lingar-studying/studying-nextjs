@@ -23,19 +23,20 @@ export default async function handler(req, res) {
     if (req.method === 'POST') {
 
 
-        console.log("User = " , req.body);
+        
+console.log("User = " , req.body);
         
 
         try {
-
+            //Why this come undefined? -->SOLVED - the problem was at postman. Need contentType: application/json
             const encryptedPassword = await encryptPassword(req.body.password);
             const newData = {...req.body, password: encryptedPassword};
             const data =  await createEntity(newData, entityName, itemSchema);
 
             res.status(200).json(data);
         }catch (error) {
-
-            res.status(500).json(error);
+            //Now antoher error so I debug here
+            return res.status(500).json({error:error.message});
         }
 
     }
