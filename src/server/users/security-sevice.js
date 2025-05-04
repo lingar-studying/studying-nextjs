@@ -2,6 +2,9 @@ import bcrypt from 'bcrypt';
 import {getAllEntities} from "@/server/db/generic-entity-dao";
 
 export const encryptPassword = async (password)=>{
+
+    console.log("password = " , password);
+    
     try {
         const hashedPassword = await bcrypt.hash(password, 10);
         console.log('Hashed password:', hashedPassword);
