@@ -57,7 +57,7 @@ export default async function handler(req, res) {
     if (session) {
         // Signed in
         console.log("Session === ", JSON.stringify(session, null, 2))
-        user = session.username;
+        user = session.user;
 
     } else {
         // Not Signed in

@@ -31,8 +31,8 @@ export default function ProtectedNextAuth({ user }) {
     const [stocks, setStocks] = React.useState([]);
 
 
-    //Not Working
-    // useEffect( () => {
+    // Not Working
+    useEffect( () => {
     //
     //     // Make a request for a user with a given ID
     //     //  axios.get('/api/simple-secure/my-stock')//won't work in the regular authorization...
@@ -54,10 +54,27 @@ export default function ProtectedNextAuth({ user }) {
     // })
 
 
-    const createThreeItems=()=>{
-        axios.get('/api/simple-secure/next-auth-my-stock', {stock: "CA"})
+    // const createThreeItems=()=>{
+    //     axios.get('/api/simple-secure/next-auth-my-stock', {stock: "CA"})
+    //
+    //         .then(function (response) {
+    //             // handle success
+    //             console.log(response);
+    //         })
+    //         .catch(function (error) {
+    //             // handle error
+    //             console.log(error);
+    //         })
+    //         .finally(function () {
+    //             // always executed
+    //         });
+
+        axios.post('/api/simple-secure/next-auth-my-stock', {stock: "CA"})
+
+
 
             .then(function (response) {
+                console.log("Trying to post too")
                 // handle success
                 console.log(response);
             })
@@ -68,7 +85,7 @@ export default function ProtectedNextAuth({ user }) {
             .finally(function () {
                 // always executed
             });
-    }
+    });
 
     return (
         <div>
@@ -79,4 +96,5 @@ export default function ProtectedNextAuth({ user }) {
             {/* פה אפשר להביא אייטמים או מה שתרצה */}
         </div>
     );
+
 }
