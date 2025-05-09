@@ -1,7 +1,9 @@
 import {createEntity, deleteEntity, getAllEntities, updateEntity} from "@/server/db/generic-entity-dao";
 import mongoose from "mongoose";
 import {authorize} from "@/server/users/security-middleware";
-import {getSession} from "next-auth/react";
+import {getServerSession, getSession} from "next-auth";
+
+import {authOptions} from '../auth/[...nextauth]'
 
 const entityName = "nextAuthItem";
 
@@ -10,7 +12,9 @@ const entityName = "nextAuthItem";
 export default async function handler(req, res) {
 
     console.log("nextAuthItem")
-    const session = await getSession({ req });
+    // const session = await getSession({ req });
+    const session = await getServerSession(req, res, authOptions);
+
 
     if (!session) {
         // אם לא נמצא סשן (משתמש לא מחובר), מחזירים שגיאה 401 Unauthorized

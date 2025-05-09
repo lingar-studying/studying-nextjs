@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import {SessionProvider} from "next-auth/react";
 
 
 const MainLayout = ({children})=> (<>
@@ -30,9 +31,11 @@ const MainLayout = ({children})=> (<>
         </li>
     </ul>
     <>
+        <SessionProvider>
         <main style = {{padding: "20px"}}>
         {children}
         </main>
+        </SessionProvider>
     </>
 </>);
 
