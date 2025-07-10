@@ -28,6 +28,10 @@ const MainLayout = ({children})=> (<>
         <li>
             <Link href="/dont-show-me">Don't show me</Link>
         </li>
+
+        <li>
+            <Link href="/pdf-poc">PDF POC (by Puppeteer)</Link>
+        </li>
     </ul>
     <>
         <main style = {{padding: "20px"}}>
