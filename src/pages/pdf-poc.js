@@ -1,32 +1,43 @@
 import React, {useEffect} from "react";
-import puppeteer from 'puppeteer';
-
-
+import {Box, Button} from "@mui/material";
 
 
 //POC of PDF generator
-const PdfPoc = () =>{
+const PdfPoc = () => {
 
 
-    const generatePdf = async () => {
-        const browser = await puppeteer.launch();
-        const page = await browser.newPage();
-        await page.goto('https://news.ycombinator.com', {
-            waitUntil: 'networkidle2',
-        });
-// Saves the PDF to hn.pdf.
-        await page.pdf({
-            path: 'hn.pdf',
-        });
+    const createPdf = async () => {
 
-        await browser.close();
+        try{
+           const res =  await fetch('/api/pdf/poc', {
+                method: 'GET'
+            });
+
+           const problem = await res.json();
+
+            console.log(problem);
+            if (!res.ok) throw new Error(`Server error: ${problem.error}`);
+
+            alert("The file created successfully. Check downloads folder");
+        }catch (error) {
+            console.log("error", error);
+            alert("error- "  + error);
+        }
+
     }
 
     useEffect(() => {
-        generatePdf();
+
     }, []);
-    return(
-        <h1>PDF POC</h1>
+    return (
+        <Box>
+
+            <h1>PDF POC</h1>
+            <Button color={"primary"} onClick={createPdf} variant={"contained"}>
+                Create PDF in downloads
+            </Button>
+        </Box>
+
     )
 }
 export default PdfPoc;
