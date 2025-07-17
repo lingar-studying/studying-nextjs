@@ -1,0 +1,86 @@
+import {Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
+import {useEffect, useState} from "react";
+
+const offersData = [
+    {description: "איפיון המוצר", amount: 1, price: 5000},
+    {description: "פיתוח דף בית + מערכת משתמשים", amount: 1, price: 10000},
+    {description: "חיבור למערכת פריוריטי", amount: 1, price: 6000}
+];
+
+//TODO - in next. Actually not working easily you need to save it from the server first, and then it will generate here...
+const PriceQuote2 = (props) => {
+
+    const [offers, setOffers] = useState([]);
+
+    useEffect(() => {
+        setOffers([...offersData]);
+
+    }, []);
+    const getTotal = () => {
+
+        let sum = 0;
+        for (let i = 0; i < offers.length; i++) {
+            sum += offers[i].price;
+        }
+        return sum;
+    }
+
+    const rows = offers;
+
+    return (
+
+
+        <Box p={20} dir={"rtl"}>
+            <h1>הצעת מחיר - YIM - Programming</h1>
+
+            <ul>
+                {rows.map(offer => {
+
+                    return (
+                        <li>
+                            {offer.description}, {offer.price}
+
+                        </li>
+                    )
+                })}
+
+
+            </ul>
+            {/*<img alt={"לוגו"} src={} />*/}
+            <p>Total: {getTotal()} </p>
+
+
+            <TableContainer component={Paper}>
+                <Table sx={{minWidth: 650}} aria-label="simple table">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>Dessert (100g serving)</TableCell>
+
+                            <TableCell align="right">Carbs&nbsp;(g)</TableCell>
+                            <TableCell align="right">Protein&nbsp;(g)</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {offers.map((row) => (
+                            <TableRow
+                                key={row.name}
+                                sx={{'&:last-child td, &:last-child th': {border: 0}}}
+                            >
+
+                                <TableCell align="right">{row.description}</TableCell>
+                                <TableCell align="right">{row.amount}</TableCell>
+                                <TableCell align="right">{row.price}</TableCell>
+                                {/*<TableCell align="right">{row.protein}</TableCell>*/}
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+
+
+        </Box>
+    );
+
+}
+
+export default PriceQuote2;
