@@ -1,5 +1,6 @@
 import React, {useEffect} from "react";
 import {Box, Button} from "@mui/material";
+import Link from "next/link";
 
 
 //POC of PDF generator
@@ -60,6 +61,21 @@ const PdfPoc = () => {
             <Button color={"info"} onClick={()=>createPdfPriceQuote(1)} variant={"contained"}>
                 Create type 1 PDF - "הצעת מחיר" in downloads
             </Button>
+
+            <Button color={"warning"} onClick={()=>createPdfPriceQuote(2)} variant={"contained"}>
+                Create type 2 PDF - " הצעת מחיר" in downloads
+            </Button>
+
+
+            <Box component={"div"}>
+                <h2>Links to the pages:</h2>
+
+
+                <Link href="/price-quote1">Price Quote 1 </Link>
+                <Link href="/price-quote-styled">Price Quote - styled </Link>
+
+
+            </Box>
         </Box>
 
     )

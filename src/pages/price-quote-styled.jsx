@@ -14,7 +14,7 @@ const offersData = [
 ];
 
 //TODO - in next. Actually not working easily you need to save it from the server first, and then it will generate here...
-const PriceQuote2 = (props) => {
+const PriceQuoteStyled = (props) => {
 
     const [offers, setOffers] = useState([]);
 
@@ -108,4 +108,4 @@ const PriceQuote2 = (props) => {
 
 }
 
-export default PriceQuote2;
+export default PriceQuoteStyled;

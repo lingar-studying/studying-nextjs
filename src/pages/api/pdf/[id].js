@@ -7,7 +7,7 @@ import os from 'os';
 
 
 
-const pagesUrls = ["price-quote1"]
+const pagesUrls = ["price-quote1", "price-quote-styled"]
 
 
 export default async function handler(req, res) {
