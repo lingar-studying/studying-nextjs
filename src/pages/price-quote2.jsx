@@ -1,5 +1,11 @@
 import {Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import {useEffect, useState} from "react";
+import { David_Libre } from 'next/font/google'
+const davidFont = David_Libre({
+    subsets: ['hebrew'],
+    weight: "400",
+})
+
 // https://nextjs.org/docs/pages/getting-started/fonts
 const offersData = [
     {description: "איפיון המוצר", amount: 1, price: 5000},
@@ -87,12 +93,13 @@ const PriceQuote2 = (props) => {
                     </TableBody>
                 </Table>
             </TableContainer>
-            <Box component={"p"}>
+            <Box component={"p"} className = {davidFont.className}>
 
                 כמה מילים בעברית מלאכת סופר שעטנז גץ בדק חיה
                 <br/>
                 חיבור למערכת פריוריטי
 
+                והכל בכתב דויד.
             </Box>
 
 

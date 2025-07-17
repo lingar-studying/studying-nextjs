@@ -1,10 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { David_Libre } from 'next/font/google'
-const davidFont = David_Libre({
-    subsets: ['hebrew'],
-    weight: "400",
-})
+
 
 const MainLayout = ({children})=> (<>
 
@@ -38,7 +34,7 @@ const MainLayout = ({children})=> (<>
         </li>
     </ul>
     <>
-        <main style = {{padding: "20px"}} className={davidFont.className}>
+        <main style = {{padding: "20px"}} >
         {children}
         </main>
     </>
