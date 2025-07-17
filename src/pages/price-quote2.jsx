@@ -34,21 +34,6 @@ const PriceQuote2 = (props) => {
         <Box p={20} dir={"rtl"}>
             <h1>הצעת מחיר - YIM - Programming</h1>
 
-            <ul>
-                {rows.map(offer => {
-
-                    return (
-                        <li>
-                            {offer.description}, {offer.price}
-
-                        </li>
-                    )
-                })}
-
-
-            </ul>
-            {/*<img alt={"לוגו"} src={} />*/}
-            <p>Total: {getTotal()} </p>
 
 
             <TableContainer component={Paper}>
@@ -77,7 +62,20 @@ const PriceQuote2 = (props) => {
 
                         <TableRow
 
-                            sx={{'&:last-child td, &:last-child th': {border: 0}}}
+                            sx={
+                                {
+                                    '&:last-child td, &:last-child th': {border: 0},
+                                    backgroundColor: '#25435d',
+
+                                    '& td, & th': {
+                                        color: 'white',
+                                        fontWeight: 'bold',
+
+                                    }
+
+
+                                }
+                            }
                         >
 
                             <TableCell align="right"></TableCell>
