@@ -1,6 +1,6 @@
 import {Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import {useEffect, useState} from "react";
-
+// https://nextjs.org/docs/pages/getting-started/fonts
 const offersData = [
     {description: "איפיון המוצר", amount: 1, price: 5000},
     {description: "פיתוח דף בית + מערכת משתמשים", amount: 1, price: 10000},
@@ -36,8 +36,8 @@ const PriceQuote2 = (props) => {
 
 
 
-            <TableContainer component={Paper}>
-                <Table sx={{minWidth: 650}} aria-label="simple table">
+            <TableContainer component={Paper} >
+                <Table sx={{minWidth: 650,  fontFamily: '"David Libre", serif' }} aria-label="simple table" >
                     <TableHead>
                         <TableRow>
                             <TableCell align="right">תיאור הפריט:</TableCell>
@@ -87,6 +87,13 @@ const PriceQuote2 = (props) => {
                     </TableBody>
                 </Table>
             </TableContainer>
+            <Box component={"p"}>
+
+                כמה מילים בעברית מלאכת סופר שעטנז גץ בדק חיה
+                <br/>
+                חיבור למערכת פריוריטי
+
+            </Box>
 
 
         </Box>
