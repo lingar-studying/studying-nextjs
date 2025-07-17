@@ -27,6 +27,7 @@ const PriceQuote2 = (props) => {
 
     const rows = offers;
 
+
     return (
 
 
@@ -54,10 +55,10 @@ const PriceQuote2 = (props) => {
                 <Table sx={{minWidth: 650}} aria-label="simple table">
                     <TableHead>
                         <TableRow>
-                            <TableCell>Dessert (100g serving)</TableCell>
+                            <TableCell align="right">תיאור הפריט:</TableCell>
 
-                            <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-                            <TableCell align="right">Protein&nbsp;(g)</TableCell>
+                            <TableCell align="right">כמות:</TableCell>
+                            <TableCell align="right">מחיר:</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -73,6 +74,18 @@ const PriceQuote2 = (props) => {
                                 {/*<TableCell align="right">{row.protein}</TableCell>*/}
                             </TableRow>
                         ))}
+
+                        <TableRow
+
+                            sx={{'&:last-child td, &:last-child th': {border: 0}}}
+                        >
+
+                            <TableCell align="right"></TableCell>
+                            <TableCell align="right">סה"כ:</TableCell>
+                            <TableCell align="right">{getTotal()}</TableCell>
+
+                            {/*<TableCell align="right">{row.protein}</TableCell>*/}
+                        </TableRow>
                     </TableBody>
                 </Table>
             </TableContainer>
