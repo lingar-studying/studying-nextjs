@@ -1,6 +1,7 @@
 import {Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import {useEffect, useState} from "react";
 import { David_Libre } from 'next/font/google'
+import Image from "next/image";
 const davidFont = David_Libre({
     subsets: ['hebrew'],
     weight: "400",
@@ -38,7 +39,21 @@ const PriceQuoteStyled = (props) => {
 
 
         <Box p={20} dir={"rtl"} >
-            <h1>הצעת מחיר - YIM - Programming</h1>
+
+            <Box>
+
+
+            </Box>
+            <h1>הצעת מחיר </h1>
+            <h2> YIM Programming</h2>
+            <h3 style={{float: "right"}}>float left</h3>
+
+            <span style={{float: "left"}}>
+            {/*<img src={"/shefa.jpg"} alt={"logo"}/>*/}
+
+            <Image src={"/shefa.jpg"} alt={"logo"} width={250} height={125}/>
+
+            </span>
 
 
 
