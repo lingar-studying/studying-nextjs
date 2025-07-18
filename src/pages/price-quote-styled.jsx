@@ -1,7 +1,8 @@
 import {Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import {useEffect, useState} from "react";
-import { David_Libre } from 'next/font/google'
+import {David_Libre} from 'next/font/google'
 import Image from "next/image";
+
 const davidFont = David_Libre({
     subsets: ['hebrew'],
     weight: "400",
@@ -38,27 +39,26 @@ const PriceQuoteStyled = (props) => {
     return (
 
 
-        <Box p={20} dir={"rtl"} >
+        <Box p={20} dir={"rtl"}>
 
-            <Box>
+            <Box component={"div"}  mb={30}>
 
+                <Box sx={{float: "right", width: "45%"}}>
+                    <h1>הצעת מחיר </h1>
+                    <h4>YIM Programming</h4>            {/*<img src={"/shefa.jpg"} alt={"logo"}/>*/}
 
+                </Box>
+
+                <Box sx={{float: "left", width: "45%"}} >
+
+                    <Image src={"/logo.jpg"} alt={"logo"} width={250} height={100}/>
+
+                </Box>
             </Box>
-            <h1>הצעת מחיר </h1>
-            <h2> YIM Programming</h2>
-            <h3 style={{float: "right"}}>float left</h3>
-
-            <span style={{float: "left"}}>
-            {/*<img src={"/shefa.jpg"} alt={"logo"}/>*/}
-
-            <Image src={"/shefa.jpg"} alt={"logo"} width={250} height={125}/>
-
-            </span>
 
 
-
-            <TableContainer component={Paper} sx = {{display: "flex", justifyContent: "center", alignItems: "center"}}>
-                <Table sx={{width: "100%" }} aria-label="simple table" >
+            <TableContainer component={Paper} sx={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+                <Table sx={{width: "100%"}} aria-label="simple table">
                     <TableHead>
                         <TableRow>
                             <TableCell align="right">תיאור הפריט:</TableCell>
@@ -82,7 +82,7 @@ const PriceQuoteStyled = (props) => {
                         ))}
 
                         <TableRow
-                            id = "price-quote"
+                            id="price-quote"
                             sx={
                                 {
                                     '&:last-child td, &:last-child th': {border: 0},
@@ -108,7 +108,7 @@ const PriceQuoteStyled = (props) => {
                     </TableBody>
                 </Table>
             </TableContainer>
-            <Box component={"p"} className = {davidFont.className}>
+            <Box component={"p"} className={davidFont.className}>
 
                 כמה מילים בעברית מלאכת סופר שעטנז גץ בדק חיה
                 <br/>
