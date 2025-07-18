@@ -1,12 +1,14 @@
 import React from "react";
 import Link from "next/link";
+import {Box} from "@mui/material";
 
 
 const MainLayout = ({children})=> (<>
 
 
-    <h1>Links</h1>
-    <ul>
+
+    <Box id = "main-menu" display={"flex"} flexDirection={"column"} component = "ul">
+
         <li>
             <Link href="/">Home Page</Link>
         </li>
@@ -32,7 +34,8 @@ const MainLayout = ({children})=> (<>
         <li>
             <Link href="/pdf-poc">PDF POC (by Puppeteer)</Link>
         </li>
-    </ul>
+    </Box>
+
     <>
         <main style = {{padding: "20px"}} >
         {children}

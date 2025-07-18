@@ -26,7 +26,13 @@ export default async function handler(req, res) {
             waitUntil: 'networkidle2',
         });
         await page.waitForSelector('#price-quote');
-
+        await page.evaluate(() => {
+            const menu = document.querySelector('#main-menu'); // או כל סלקטור שמתאים לתפריט
+            if (menu) {
+                menu.remove();
+            }
+        });
+//main-menu
 // Saves the PDF to hn.pdf.
         await page.pdf({
             path: downloadsFolder + `/YIM-Programming-file-${pagesUrls[+id]}.pdf`,
