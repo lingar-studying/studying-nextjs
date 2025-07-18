@@ -37,13 +37,13 @@ const PriceQuoteStyled = (props) => {
     return (
 
 
-        <Box p={20} dir={"rtl"}>
+        <Box p={20} dir={"rtl"} >
             <h1>הצעת מחיר - YIM - Programming</h1>
 
 
 
-            <TableContainer component={Paper} >
-                <Table sx={{minWidth: 650,  fontFamily: '"David Libre", serif' }} aria-label="simple table" >
+            <TableContainer component={Paper} sx = {{display: "flex", justifyContent: "center", alignItems: "center"}}>
+                <Table sx={{width: "100%" }} aria-label="simple table" >
                     <TableHead>
                         <TableRow>
                             <TableCell align="right">תיאור הפריט:</TableCell>
@@ -67,7 +67,7 @@ const PriceQuoteStyled = (props) => {
                         ))}
 
                         <TableRow
-
+                            id = "price-quote"
                             sx={
                                 {
                                     '&:last-child td, &:last-child th': {border: 0},

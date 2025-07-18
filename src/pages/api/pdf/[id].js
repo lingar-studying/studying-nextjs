@@ -21,12 +21,23 @@ export default async function handler(req, res) {
 
         const browser = await puppeteer.launch();
         const page = await browser.newPage();
+
         await page.goto('http://localhost:3000/' + pagesUrls[+id], {
             waitUntil: 'networkidle2',
         });
+        await page.waitForSelector('#price-quote');
+
 // Saves the PDF to hn.pdf.
         await page.pdf({
             path: downloadsFolder + `/YIM-Programming-file-${pagesUrls[+id]}.pdf`,
+            format: 'A4',
+            printBackground: true,
+            // margin: {
+            //     top: '20mm',
+            //     bottom: '20mm',
+            //     left: '20mm',
+            //     right: '20mm'
+            // }
         });
 
         await browser.close();
