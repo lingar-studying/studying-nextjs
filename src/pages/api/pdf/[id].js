@@ -7,7 +7,7 @@ import os from 'os';
 
 
 
-const pagesUrls = ["price-quote1", "price-quote-styled"]
+const pagesUrls = ["price-quote1", "price-quote-styled", "price-quote-server-props"]
 
 
 export default async function handler(req, res) {

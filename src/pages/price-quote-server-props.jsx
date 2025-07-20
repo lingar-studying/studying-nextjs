@@ -1,0 +1,126 @@
+import {Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
+import {useEffect, useState} from "react";
+import {David_Libre} from 'next/font/google'
+import Image from "next/image";
+
+const davidFont = David_Libre({
+    subsets: ['hebrew'],
+    weight: "400",
+})
+
+// https://nextjs.org/docs/pages/getting-started/fonts
+const offersData = [
+    {description: "איפיון המוצר", amount: 1, price: 5000},
+    {description: "פיתוח דף בית + מערכת משתמשים", amount: 1, price: 10000},
+    {description: "חיבור למערכת פריוריטי", amount: 1, price: 6000}
+];
+
+//TODO - in next. Actually not working easily you need to save it from the server first, and then it will generate here...
+const PriceQuoteServerProps = (props) => {
+
+    const getTotal = () => props.offers.reduce((sum, o) => sum + o.price, 0);
+
+
+    return (
+
+
+        <Box p={20} dir={"rtl"}>
+
+            <Box component={"div"}  mb={30}>
+
+                <Box sx={{float: "right", width: "45%"}}>
+                    <h1>הצעת מחיר </h1>
+                    <h4>YIM Programming</h4>            {/*<img src={"/shefa.jpg"} alt={"logo"}/>*/}
+
+                </Box>
+
+                <Box sx={{float: "left", width: "45%"}} >
+
+                    <Image src={"/logo.jpg"} alt={"logo"} width={250} height={100}/>
+
+                </Box>
+            </Box>
+
+
+            <TableContainer component={Paper} sx={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+                <Table sx={{width: "100%"}} aria-label="simple table">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell align="right">תיאור הפריט:</TableCell>
+
+                            <TableCell align="right">כמות:</TableCell>
+                            <TableCell align="right">מחיר:</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {props.offers.map((row) => (
+                            <TableRow
+                                key={row.name}
+                                sx={{'&:last-child td, &:last-child th': {border: 0}}}
+                            >
+
+                                <TableCell align="right">{row.description}</TableCell>
+                                <TableCell align="right">{row.amount}</TableCell>
+                                <TableCell align="right">{row.price}</TableCell>
+                                {/*<TableCell align="right">{row.protein}</TableCell>*/}
+                            </TableRow>
+                        ))}
+
+                        <TableRow
+                            id="price-quote"
+                            sx={
+                                {
+                                    '&:last-child td, &:last-child th': {border: 0},
+                                    backgroundColor: '#25435d',
+
+                                    '& td, & th': {
+                                        color: 'white',
+                                        fontWeight: 'bold',
+
+                                    }
+
+
+                                }
+                            }
+                        >
+
+                            <TableCell align="right"></TableCell>
+                            <TableCell align="right">סה"כ:</TableCell>
+                            <TableCell align="right">{getTotal()}</TableCell>
+
+                            {/*<TableCell align="right">{row.protein}</TableCell>*/}
+                        </TableRow>
+                    </TableBody>
+                </Table>
+            </TableContainer>
+            <Box component={"p"} className={davidFont.className}>
+
+                כמה מילים בעברית מלאכת סופר שעטנז גץ בדק חיה
+                <br/>
+                חיבור למערכת פריוריטי
+
+                והכל בכתב דויד.
+            </Box>
+
+
+        </Box>
+    );
+
+}
+
+export default PriceQuoteServerProps;
+
+
+export async function getServerSideProps() {
+    const offersData = [
+        { description: "שימוש בתכונות שרת", amount: 1, price: 7000 },
+        { description: "תכונות שרת", amount: 1, price: 10340 },
+        { description: "תיכנות איכות", amount: 1, price: 2340 }
+    ];
+
+    return {
+        props: {
+            offers: offersData,
+        },
+    };
+}

@@ -62,10 +62,12 @@ const PdfPoc = () => {
                 Create type 1 PDF - "הצעת מחיר" in downloads
             </Button>
 
-            <Button color={"warning"} onClick={()=>createPdfPriceQuote(2)} variant={"contained"}>
+            <Button color={"warning"} onClick={() => createPdfPriceQuote(2)} variant={"contained"}>
                 Create type 2 PDF - " הצעת מחיר" in downloads
             </Button>
-
+            <Button color={"error"} onClick={()=>createPdfPriceQuote(3)} variant={"contained"}>
+                Create type 3 PDF - " הצעת מחיר" in downloads- working with server props
+            </Button>
 
             <Box component={"div"}>
                 <h2>Links to the pages:</h2>
