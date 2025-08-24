@@ -2,6 +2,7 @@ import {Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, Tabl
 import {useEffect, useState} from "react";
 import {David_Libre} from 'next/font/google'
 import Image from "next/image";
+import {getAllBookmarks} from "@/server/db/db-services";
 
 const davidFont = David_Libre({
     subsets: ['hebrew'],
@@ -18,6 +19,7 @@ const offersData = [
 //TODO - in next. Actually not working easily you need to save it from the server first, and then it will generate here...
 const PriceQuoteServerProps = (props) => {
 
+    console.log("Props", props);
     const getTotal = () => props.offers.reduce((sum, o) => sum + o.price, 0);
 
 
@@ -26,7 +28,7 @@ const PriceQuoteServerProps = (props) => {
 
         <Box p={20} dir={"rtl"}>
 
-            <Box component={"div"}  mb={30}>
+            <Box component={"div"} mb={30}>
 
                 <Box sx={{float: "right", width: "45%"}}>
                     <h1>הצעת מחיר </h1>
@@ -34,13 +36,19 @@ const PriceQuoteServerProps = (props) => {
 
                 </Box>
 
-                <Box sx={{float: "left", width: "45%"}} >
+                <Box sx={{float: "left", width: "45%"}}>
 
                     <Image src={"/logo.jpg"} alt={"logo"} width={250} height={100}/>
 
                 </Box>
             </Box>
 
+
+            <Box component={"p"}>
+                הכנת הרכיב
+
+
+            </Box>
 
             <TableContainer component={Paper} sx={{display: "flex", justifyContent: "center", alignItems: "center"}}>
                 <Table sx={{width: "100%"}} aria-label="simple table">
@@ -102,6 +110,17 @@ const PriceQuoteServerProps = (props) => {
                 והכל בכתב דויד.
             </Box>
 
+            <h2>הספרים שלי:</h2>
+            <ul>
+                {
+
+                    props.data.map((row) => {
+
+                        return (<li>{row.bookName}</li>);
+                    })
+
+                }
+            </ul>
 
         </Box>
     );
@@ -110,17 +129,25 @@ const PriceQuoteServerProps = (props) => {
 
 export default PriceQuoteServerProps;
 
-
+//must to call it in this name
 export async function getServerSideProps() {
+    const data = await getAllBookmarks();
+    const cleanData = JSON.parse(JSON.stringify(data));
+
+
+    console.log("Hellow server props, data ", data);
     const offersData = [
-        { description: "שימוש בתכונות שרת", amount: 1, price: 7000 },
-        { description: "תכונות שרת", amount: 1, price: 10340 },
-        { description: "תיכנות איכות", amount: 1, price: 2340 }
+        {description: "שימוש בתכונות שרת", amount: 1, price: 7000},
+        {description: "תכונות שרת", amount: 1, price: 10340},
+        {description: "תיכנות איכות", amount: 1, price: 2340}
     ];
 
+    //here we decide what data to send
     return {
         props: {
             offers: offersData,
+            person: "Yosi",
+            data: cleanData
         },
     };
 }

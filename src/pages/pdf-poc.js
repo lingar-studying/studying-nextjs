@@ -73,8 +73,10 @@ const PdfPoc = () => {
                 <h2>Links to the pages:</h2>
 
 
-                <Link href="/price-quote1">Price Quote 1 </Link>
-                <Link href="/price-quote-styled">Price Quote - styled </Link>
+                <Link href="/price-quote1">Price Quote 1 </Link> |
+                <Link href="/price-quote-styled">Price Quote - styled </Link> |
+                <Link href="/price-quote-server-props">Price server props </Link>
+
 
 
             </Box>

@@ -10,9 +10,11 @@ const davidFont = David_Libre({
 
 // https://nextjs.org/docs/pages/getting-started/fonts
 const offersData = [
-    {description: "איפיון המוצר", amount: 1, price: 5000},
-    {description: "פיתוח דף בית + מערכת משתמשים", amount: 1, price: 10000},
-    {description: "חיבור למערכת פריוריטי", amount: 1, price: 6000}
+    {description: "איפיון המוצר", amount: 1, price: 6423},
+    {description: "פיתוח דף בית + מערכת משתמשים", amount: 1, price: 10023},
+    {description: "חיבור למערכת פריוריטי", amount: 1, price: 6000},
+    {description: "בדיקות תוכנה", amount: 1, price: 8500}
+
 ];
 
 //TODO - in next. Actually not working easily you need to save it from the server first, and then it will generate here...
@@ -21,6 +23,9 @@ const PriceQuoteStyled = (props) => {
     const [offers, setOffers] = useState([]);
 
     useEffect(() => {
+
+        console.log("Hellow react data ")
+
         setOffers([...offersData]);
 
     }, []);

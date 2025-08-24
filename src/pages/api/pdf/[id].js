@@ -32,8 +32,8 @@ export default async function handler(req, res) {
                 menu.remove();
             }
         });
-//main-menu
-// Saves the PDF to hn.pdf.
+        //main-menu
+        // Saves the PDF to hn.pdf.
         await page.pdf({
             path: downloadsFolder + `/YIM-Programming-file-${pagesUrls[+id]}.pdf`,
             format: 'A4',
@@ -54,10 +54,10 @@ export default async function handler(req, res) {
 
         if (req.method === 'GET') {
 
-            switch (id){
-                case +1:
-
-            }
+            // switch (id){
+            //     case +1:
+            //
+            // }
 
             await generatePdf();
             res.status(200).json("succeed");
