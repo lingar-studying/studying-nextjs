@@ -17,7 +17,7 @@ export default function handler(req, res) {
 
 
     //some conditions flags.
-    const flagFileType = req.body?.flagFileType ?? null;
+    const flagFileType = null;
     //all types - not available , but for the studying we keep it open - so on default we keep it open.
     let allowedExts = [];// [".pdf", ".png", ".jpg"];
     let allowedMimes = [];// ["application/pdf", "image/png", "image/jpeg"];
@@ -51,11 +51,13 @@ export default function handler(req, res) {
     });
     form.parse(req, (err, fields, files) => {
         if (err) return res.status(500).json({error: err.message});
-        if (!Array.isArray(files)) return res.status(400).json({error: 'No file uploaded'});
+        console.log("files", files);
+        if (!files?.files || files.files.length <= 0) return res.status(400).json({ error: 'No file uploaded' });
         // File is already saved in uploadDir
         console.log("upload folder = ", uploadDir);
+        console.log("files = ", files.files);
         res.status(200).json({
-            message: 'Files uploaded', files: files.file.map(f => f.originalFilename)
+            message: 'Files uploaded', files: files.files.map(f => f.originalFilename)
         });
     });
 }

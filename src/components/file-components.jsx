@@ -25,20 +25,27 @@ export const SingleUpload = (props) => {
 }
 
 export const MultiUpload = (props) => {
-    const [file, setFile] = useState(null);
+    const [files, setFiles] = useState([]);
 
     const handleUpload = async () => {
-        if (!file) return alert('Select a file');
+
+        console.log("file = ", files);
+        if (files.length ===  0) return alert('Select a file');
         const formData = new FormData();
-        formData.append('file', file);
+        files.forEach((file) => {
+            formData.append('files', file);
+
+        })
+
         const res = await fetch('/api/file-stuff/upload-multi', { method: 'POST', body: formData });
         const data = await res.json();
+        console.log("data  = ",data )
         alert(data.message);
     };
     return (
         <Box component={"div"} {...props}>
             <Typography>Here you can upload multi</Typography>
-            <input type="file" multiple={true} onChange={(e) => setFile([...e.target.files])}/>
+            <input type="file" multiple={true} onChange={(e) => setFiles([...e.target.files])}/>
             <Button variant="contained" onClick={handleUpload}>Upload Files</Button>
         </Box>
     );
