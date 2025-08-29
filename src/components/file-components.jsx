@@ -8,12 +8,27 @@ export const SingleUpload = (props) => {
     const [file, setFile] = useState(null);
 
     const handleUpload = async () => {
-        if (!file) return alert('Select a file');
-        const formData = new FormData();
-        formData.append('file', file);
-        const res = await fetch('/api/file-stuff/upload-single', { method: 'POST', body: formData });
-        const data = await res.json();
-        alert(data.message);
+
+        try {
+            if (!file) return alert('Select a file');
+            const formData = new FormData();
+            formData.append('file', file);
+            const res = await fetch('/api/file-stuff/upload-single', {method: 'POST', body: formData});
+            const data = await res.json();
+
+            if (!res.ok) {
+                alert(`Error: ${data.error || 'Unknown error'}`);
+            } else {
+                alert(data.message);
+            }
+
+
+
+        }catch (err){
+
+            alert(`Network or parsing error: ${err.message}`);
+
+        }
     };
     return (
         <Box component={"div"} {...props}>
@@ -29,18 +44,33 @@ export const MultiUpload = (props) => {
 
     const handleUpload = async () => {
 
-        console.log("file = ", files);
-        if (files.length ===  0) return alert('Select a file');
-        const formData = new FormData();
-        files.forEach((file) => {
-            formData.append('files', file);
 
-        })
+        try {
+            console.log("file = ", files);
+            if (files.length ===  0) return alert('Select a file');
+            const formData = new FormData();
+            files.forEach((file) => {
+                formData.append('files', file);
 
-        const res = await fetch('/api/file-stuff/upload-multi', { method: 'POST', body: formData });
-        const data = await res.json();
-        console.log("data  = ",data )
-        alert(data.message);
+            })
+
+            const res = await fetch('/api/file-stuff/upload-multi', { method: 'POST', body: formData });
+
+            const data = await res.json();
+
+
+            if (!res.ok) {
+                alert(`Error: ${data.error || 'Unknown error'}`);
+            } else {
+                console.log("data  = ",data )
+
+                alert(data.message);
+            }
+
+        }catch (err){
+            alert(`Network or parsing error: ${err.message}`);
+        }
+
     };
     return (
         <Box component={"div"} {...props}>
