@@ -54,6 +54,8 @@ export const MultiUpload = (props) => {
 
             })
 
+            if(props.flagFileType) formData.append('flagFileType', props.flagFileType);
+
             const res = await fetch('/api/file-stuff/upload-multi', { method: 'POST', body: formData });
 
             const data = await res.json();
@@ -74,7 +76,7 @@ export const MultiUpload = (props) => {
     };
     return (
         <Box component={"div"} {...props}>
-            <Typography>Here you can upload multi</Typography>
+            <Typography>Here you can upload multi {props.flagFileType && <b>Only for {props.flagFileType}</b>}</Typography>
             <input type="file" multiple={true} onChange={(e) => setFiles([...e.target.files])}/>
             <Button variant="contained" onClick={handleUpload}>Upload Files</Button>
         </Box>

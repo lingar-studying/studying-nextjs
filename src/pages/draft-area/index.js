@@ -23,6 +23,9 @@ const DraftDefault = () => {
             <SingleUpload/>
             <MultiUpload/>
 
+            <MultiUpload flagFileType = {'only_images'}/>
+            <MultiUpload flagFileType = {'only_pdf'}/>
+
         </>
     )
 }
