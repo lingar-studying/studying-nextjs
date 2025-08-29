@@ -17,8 +17,30 @@ export default function handler(req, res) {
 
 
     //some conditions flags.
+    const {flagFileType} = req.body?.flagFileType;
+    //all types - not available , but for the studying we keep it open - so on default we keep it open.
+    let allowedExts = [];// [".pdf", ".png", ".jpg"];
+    let allowedMimes = [];// ["application/pdf", "image/png", "image/jpeg"];
 
-    //only
+    if(flagFileType){
+        if(flagFileType === 'only_images'){
+            allowedExts =[ ".png", ".jpg"];
+            allowedMimes = [ "image/png", "image/jpeg"];
+        }
+        else if(flagFileType === 'only_pdf'){
+            allowedExts =[".pdf"];
+            allowedMimes = ["application/pdf"];
+        }
+
+        else if(flagFileType === 'all'){
+            allowedExts =[".pdf", ".png", ".jpg"];
+            allowedMimes = ["application/pdf", "image/png", "image/jpeg"];
+
+        }
+       // allowedMimes = [];// ["application/pdf", "image/png", "image/jpeg"];
+    }
+
+
 
 
     if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir, {recursive: true});
