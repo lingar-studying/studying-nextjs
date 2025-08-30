@@ -2,10 +2,12 @@
  * Some file using components
  */
 import {Box, Button, Typography} from "@mui/material";
-import {useState} from "react";
+import {useRef, useState} from "react";
 
 export const SingleUpload = (props) => {
     const [file, setFile] = useState(null);
+
+    const filesInputRef = useRef(null);
 
     const handleUpload = async () => {
 
@@ -20,11 +22,13 @@ export const SingleUpload = (props) => {
                 alert(`Error: ${data.error || 'Unknown error'}`);
             } else {
                 alert(data.message);
+                // reset file + input
+                setFile(null);
+                if (filesInputRef.current) filesInputRef.current.value = "";
             }
 
 
-
-        }catch (err){
+        } catch (err) {
 
             alert(`Network or parsing error: ${err.message}`);
 
@@ -33,30 +37,38 @@ export const SingleUpload = (props) => {
     return (
         <Box component={"div"} {...props}>
             <Typography>You can upload any file</Typography>
-            <input type="file" onChange={(e) => setFile(e.target.files[0])}/>
+            <input type="file" onChange={(e) => setFile(e.target.files[0])}
+                   ref={filesInputRef}
+
+            />
             <Button variant="contained" onClick={handleUpload}>Upload</Button>
         </Box>
     );
 }
+/*********------------------------------------------------------------*/
+
+
 
 export const MultiUpload = (props) => {
     const [files, setFiles] = useState([]);
+    const filesInputRef = useRef(null);
+
 
     const handleUpload = async () => {
 
 
         try {
             console.log("file = ", files);
-            if (files.length ===  0) return alert('Select a file');
+            if (files.length === 0) return alert('Select a file');
             const formData = new FormData();
             files.forEach((file) => {
                 formData.append('files', file);
 
             })
 
-            if(props.flagFileType) formData.append('flagFileType', props.flagFileType);
+            if (props.flagFileType) formData.append('flagFileType', props.flagFileType);
 
-            const res = await fetch('/api/file-stuff/upload-multi', { method: 'POST', body: formData });
+            const res = await fetch('/api/file-stuff/upload-multi', {method: 'POST', body: formData});
 
             const data = await res.json();
 
@@ -64,20 +76,27 @@ export const MultiUpload = (props) => {
             if (!res.ok) {
                 alert(`Error: ${data.error || 'Unknown error'}`);
             } else {
-                console.log("data  = ",data )
+                console.log("data  = ", data)
 
                 alert(data.message);
+                // reset file + input
+                setFiles([]);
+                if (filesInputRef.current) filesInputRef.current.value = "";
             }
 
-        }catch (err){
+        } catch (err) {
             alert(`Network or parsing error: ${err.message}`);
         }
 
     };
     return (
         <Box component={"div"} {...props}>
-            <Typography>Here you can upload multi {props.flagFileType && <b>Only for {props.flagFileType}</b>}</Typography>
-            <input type="file" multiple={true} onChange={(e) => setFiles([...e.target.files])}/>
+            <Typography>Here you can upload multi {props.flagFileType &&
+                <b>Only for {props.flagFileType}</b>}</Typography>
+            <input type="file" multiple={true} onChange={(e) => setFiles([...e.target.files])}
+                   ref={filesInputRef}
+
+            />
             <Button variant="contained" onClick={handleUpload}>Upload Files</Button>
         </Box>
     );

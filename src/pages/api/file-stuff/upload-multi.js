@@ -34,8 +34,11 @@ export default function handler(req, res) {
             if (err) return res.status(500).json({error: err.message});
             console.log("files & fields", files, fields);
 
+            // const flagFileType = fields.flagFileType ?? null;//this make the types not working.
 
-            const flagFileType = fields.flagFileType[0] ?? null;
+
+            //this makes error in the saving on multi
+            const flagFileType = fields.flagFileType?.[0] ?? null;
 
 
             // const flagFileType = null;
