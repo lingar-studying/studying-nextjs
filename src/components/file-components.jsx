@@ -101,3 +101,103 @@ export const MultiUpload = (props) => {
         </Box>
     );
 }
+
+export const DragAndDropUpload = (props) => {
+    const [files, setFiles] = useState([]);
+    const filesInputRef = useRef(null);
+    const [isDragging, setIsDragging] = useState(false);   // 🟢 added
+
+
+    const handleFiles = (newFiles) => setFiles([...newFiles]); // 🟢 added
+
+    const handleDrop = (e) => {                                // 🟢 added
+        e.preventDefault();
+        setIsDragging(false);                                   // 🟢 added
+        if (e.dataTransfer.files && e.dataTransfer.files.length) {
+            handleFiles(e.dataTransfer.files);                 // 🟢 added
+            e.dataTransfer.clearData();                        // 🟢 added
+        }
+    };
+
+    const handleDragOver = (e) => {                             // 🟢 added
+        e.preventDefault();
+        setIsDragging(true);                                    // 🟢 added
+    };
+
+    const handleDragLeave = () => setIsDragging(false);         // 🟢 added
+
+
+
+    const handleUpload = async () => {
+
+
+        try {
+            console.log("file = ", files);
+            if (files.length === 0) return alert('Select a file');
+            const formData = new FormData();
+            files.forEach((file) => {
+                formData.append('files', file);
+
+            })
+
+            if (props.flagFileType) formData.append('flagFileType', props.flagFileType);
+
+            const res = await fetch('/api/file-stuff/upload-multi', {method: 'POST', body: formData});
+
+            const data = await res.json();
+
+
+            if (!res.ok) {
+                alert(`Error: ${data.error || 'Unknown error'}`);
+            } else {
+                console.log("data  = ", data)
+
+                alert(data.message);
+                // reset file + input
+                setFiles([]);
+                if (filesInputRef.current) filesInputRef.current.value = "";
+            }
+
+        } catch (err) {
+            alert(`Network or parsing error: ${err.message}`);
+        }
+
+    };
+    return (
+        <Box
+            component={"div"}
+            {...props}
+            onDrop={handleDrop}                     // 🟢 added
+            onDragOver={handleDragOver}             // 🟢 added
+            onDragLeave={handleDragLeave}           // 🟢 added
+            onClick={() => filesInputRef.current?.click()} // 🟢 added
+            sx={{                                    // 🟢 added
+                border: "2px dashed gray",
+                borderRadius: 2,
+                p: 4,
+                textAlign: "center",
+                cursor: "pointer",
+                bgcolor: isDragging ? "#e3f2fd" : "#fafafa", // 🟢 added
+                transition: "background-color 0.2s",         // 🟢 added
+            }}
+        >
+            <Typography>Nice UI - Here you can upload multi {props.flagFileType &&
+                <b>Only for {props.flagFileType}</b>}</Typography>
+            <input type="file" multiple={true} onChange={(e) => handleFiles(e.target.files)}
+                   ref={filesInputRef}
+                   style={{ display: "none" }}               // 🟢 added
+            />
+            {files.length > 0 && (                            // 🟢 added
+                <Box mt={2}>
+                    <Typography>Selected files:</Typography>
+                    <ul>
+                        {[...files].map((f) => (
+                            <li key={f.name}>{f.name}</li>
+                        ))}
+                    </ul>
+                </Box>
+            )}
+            <Button variant="contained" onClick={handleUpload}>Upload Files</Button>
+        </Box>
+    );
+}
