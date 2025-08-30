@@ -1,6 +1,6 @@
 import React from "react";
 import {Box, Button} from "@mui/material";
-import {DragAndDropUpload, MultiUpload, SingleUpload} from "@/components/file-components";
+import {DragAndDropUpload, DragAndDropUploadUpgraded, MultiUpload, SingleUpload} from "@/components/file-components";
 
 // export default function Draft (){
 // }
@@ -27,6 +27,7 @@ const DraftDefault = () => {
             <MultiUpload flagFileType = {'only_pdf'}/>
 
             <DragAndDropUpload/>
+            <DragAndDropUploadUpgraded/>
 
         </>
     )
