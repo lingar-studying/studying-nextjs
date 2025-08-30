@@ -165,41 +165,45 @@ export const DragAndDropUpload = (props) => {
 
     };
     return (
-        <Box
-            component={"div"}
-            {...props}
-            onDrop={handleDrop}                     // 🟢 added
-            onDragOver={handleDragOver}             // 🟢 added
-            onDragLeave={handleDragLeave}           // 🟢 added
-            onClick={() => filesInputRef.current?.click()} // 🟢 added
-            sx={{                                    // 🟢 added
-                border: "2px dashed gray",
-                borderRadius: 2,
-                p: 4,
-                textAlign: "center",
-                cursor: "pointer",
-                bgcolor: isDragging ? "#e3f2fd" : "#fafafa", // 🟢 added
-                transition: "background-color 0.2s",         // 🟢 added
-            }}
-        >
-            <Typography>Nice UI - Here you can upload multi {props.flagFileType &&
-                <b>Only for {props.flagFileType}</b>}</Typography>
-            <input type="file" multiple={true} onChange={(e) => handleFiles(e.target.files)}
-                   ref={filesInputRef}
-                   style={{ display: "none" }}               // 🟢 added
-            />
-            {files.length > 0 && (                            // 🟢 added
-                <Box mt={2}>
-                    <Typography>Selected files:</Typography>
-                    <ul>
-                        {[...files].map((f) => (
-                            <li key={f.name}>{f.name}</li>
-                        ))}
-                    </ul>
-                </Box>
-            )}
-            <Button variant="contained" onClick={handleUpload}>Upload Files</Button>
+        <Box  sx={{m:3}}>
+            <Box
+                component={"div"}
+                {...props}
+                onDrop={handleDrop}                     // 🟢 added
+                onDragOver={handleDragOver}             // 🟢 added
+                onDragLeave={handleDragLeave}           // 🟢 added
+                onClick={() => filesInputRef.current?.click()} // 🟢 added
+                sx={{                                    // 🟢 added
+                    border: "2px dashed gray",
+                    borderRadius: 2,
+                    p: 4,
+                    textAlign: "center",
+                    cursor: "pointer",
+                    bgcolor: isDragging ? "#e3f2fd" : "#fafafa", // 🟢 added
+                    transition: "background-color 0.2s",         // 🟢 added
+                }}
+            >
+                <Typography>Nice UI - Here you can upload multi {props.flagFileType &&
+                    <b>Only for {props.flagFileType}</b>}</Typography>
+                <input type="file" multiple={true} onChange={(e) => handleFiles(e.target.files)}
+                       ref={filesInputRef}
+                       style={{ display: "none" }}               // 🟢 added
+                />
+                {files.length > 0 && (                            // 🟢 added
+                    <Box mt={2}>
+                        <Typography>Selected files:</Typography>
+                        <ul>
+                            {[...files].map((f) => (
+                                <li key={f.name}>{f.name}</li>
+                            ))}
+                        </ul>
+                    </Box>
+                )}
+            </Box>
+            <Button variant="contained" onClick={handleUpload} sx={{m:3}}>Upload Files</Button>
+
         </Box>
+
     );
 }
 
@@ -268,53 +272,60 @@ export const DragAndDropUploadUpgraded = (props) => {
 
     };
     return (
-        <Box
-            component={"div"}
-            {...props}
-            onDrop={handleDrop}                     // 🟢 added
-            onDragOver={handleDragOver}             // 🟢 added
-            onDragLeave={handleDragLeave}           // 🟢 added
-            onClick={() => filesInputRef.current?.click()} // 🟢 added
-            sx={{                                    // 🟢 added
-                border: "2px dashed gray",
-                borderRadius: 2,
-                p: 4,
-                textAlign: "center",
-                cursor: "pointer",
-                bgcolor: isDragging ? "#e3f2fd" : "#fafafa", // 🟢 added
-                transition: "background-color 0.2s",         // 🟢 added
-            }}
-        >
-            <Typography>Nice UI - Here you can upload multi {props.flagFileType &&
-                <b>Only for {props.flagFileType}</b>}</Typography>
-            <input type="file" multiple={true} onChange={(e) => handleFiles(e.target.files)}
-                   ref={filesInputRef}
-                   style={{ display: "none" }}               // 🟢 added
-            />
-            {files.length > 0 && (                            // 🟢 added
-                <Box mt={2}>
-                    <Typography>Selected files:</Typography>
-                    <ul>
-                        {[...files].map((f) => (
-                            <li key={f.name} style={{ display: "flex", alignItems: "center", gap: 4 }}>
-                                {f.name}
-                                <IconButton size="small" onClick={() => removeFile(f.name)}>
-                                    <CloseIcon fontSize="small"/>
-                                </IconButton>
-                            </li>
-                        ))}
-                    </ul>
-                </Box>
-            )}
-            {uploadedFiles.length > 0 && ( // 🟢 added: show already uploaded files
-                <Box mt={2}>
-                    <Typography>Already uploaded:</Typography>
-                    <ul>
-                        {uploadedFiles.map(name => <li key={name}>{name}</li>)}
-                    </ul>
-                </Box>
-            )}
-            <Button variant="contained" onClick={handleUpload}>Upload Files</Button>
-        </Box>
+       <Box  sx={{m:3}}>
+
+           <Box
+               component={"div"}
+               {...props}
+               onDrop={handleDrop}                     // 🟢 added
+               onDragOver={handleDragOver}             // 🟢 added
+               onDragLeave={handleDragLeave}           // 🟢 added
+               onClick={() => filesInputRef.current?.click()} // 🟢 added
+               sx={{                                    // 🟢 added
+                   border: "2px dashed gray",
+                   borderRadius: 2,
+                   p: 4,
+                   textAlign: "center",
+                   cursor: "pointer",
+                   bgcolor: isDragging ? "#e3f2fd" : "#fafafa", // 🟢 added
+                   transition: "background-color 0.2s",         // 🟢 added
+               }}
+           >
+               <Typography>Nice UI - Here you can upload multi, and remove {props.flagFileType &&
+                   <b>Only for {props.flagFileType}</b>}</Typography>
+               <input type="file" multiple={true} onChange={(e) => handleFiles(e.target.files)}
+                      ref={filesInputRef}
+                      style={{ display: "none" }}               // 🟢 added
+               />
+               {files.length > 0 && (                            // 🟢 added
+                   <Box mt={2}>
+                       <Typography>Selected files:</Typography>
+                       <ul>
+                           {[...files].map((f) => (
+                               <li key={f.name} style={{ display: "flex", alignItems: "center", gap: 4 }}>
+                                   {f.name}
+                                   <IconButton size="small" onClick={(e) => {
+                                       e.stopPropagation(); // 🟢 prevent opening file picker
+                                       removeFile(f.name)
+                                   }}>
+                                       <CloseIcon fontSize="small"/>
+                                   </IconButton>
+                               </li>
+                           ))}
+                       </ul>
+                   </Box>
+               )}
+               {uploadedFiles.length > 0 && ( // 🟢 added: show already uploaded files
+                   <Box mt={2}>
+                       <Typography>Already uploaded:</Typography>
+                       <ul>
+                           {uploadedFiles.map(name => <li key={name}>{name}</li>)}
+                       </ul>
+                   </Box>
+               )}
+           </Box>
+           <Button variant="contained" onClick={handleUpload} sx={{m:3}}>Upload Files</Button>
+       </Box>
+
     );
 }
