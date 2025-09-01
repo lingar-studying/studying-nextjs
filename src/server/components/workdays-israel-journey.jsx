@@ -1,9 +1,11 @@
 import React from "react";
-import {Box, Button} from "@mui/material";
+import {Box, Button, TextField} from "@mui/material";
 import Link from "next/link";
 
 const WorkdaysIsraelJourney = (props) =>{
 
+    const [start, setStart] = React.useState("");
+    const [end, setEnd] = React.useState("");
 
     const firstTrying = () => {
 
@@ -24,9 +26,30 @@ https://www.hebcal.com/hebcal?v=1&cfg=json&maj=on&min=on&mod=on&nx=on&year=now&m
 
 https://www.hebcal.com/zmanim?&start=2025-01-01&end=2025-12-31&yt=H&cfg=json&im=1&geonameid=293397
  */
+    }
+
+    const calculateWorkdays = async () => {
+
+        const response =await fetch(
+
+            `https://www.hebcal.com/hebcal?v=1&cfg=json&start=${start}-01-01
+            &end=${end}-01-01&yt=H&maj=on&i=on&yto=on&geonameid=281184      `
+        );
+        const holidays = await response.json();
+        console.log("holidays = ", holidays);
 
 
     }
+
+
+
+
+
+
+
+
+
+
     return (<>
     <Box component="div">
         <h1>Studying on Israel Workdays API</h1>
@@ -50,6 +73,32 @@ https://www.hebcal.com/zmanim?&start=2025-01-01&end=2025-12-31&yt=H&cfg=json&im=
             זה כולל גם חוה"מ.
         </p>
 
+
+        <Box component="div" >
+            <h3>choose destination for get the holidays (Yom tov)</h3>
+
+            <Box sx={{display: 'flex', flexDirection: 'row',
+                justifyContent: 'space-between', flexWrap: 'wrap', mt:5}}>
+
+                <Box>
+                    <TextField variant={"outlined"} value = {start} label={"starting year"}
+
+
+                               onChange={(e) => setStart(e.target.value)}
+                    />
+                </Box>
+
+                <Box>
+                    <TextField variant={"outlined"} value = {end} label={"ending year"}
+                               onChange={(e) => setEnd(e.target.value)}/>
+                </Box>
+
+                <Button onClick={calculateWorkdays}
+                variant={"contained"}>Generate Workdays</Button>
+            </Box>
+
+
+        </Box>
     </Box>
 
 
