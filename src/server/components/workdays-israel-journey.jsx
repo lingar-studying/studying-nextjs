@@ -4,8 +4,10 @@ import Link from "next/link";
 
 const WorkdaysIsraelJourney = (props) =>{
 
-    const [start, setStart] = React.useState("");
-    const [end, setEnd] = React.useState("");
+    const [start, setStart] = React.useState(new Date().getFullYear());
+    const [end, setEnd] = React.useState(new Date().getFullYear() +1);
+
+    const [holidays, setHolidays] = React.useState([]);
 
     const firstTrying = () => {
 
@@ -35,9 +37,10 @@ https://www.hebcal.com/zmanim?&start=2025-01-01&end=2025-12-31&yt=H&cfg=json&im=
             `https://www.hebcal.com/hebcal?v=1&cfg=json&start=${start}-01-01
             &end=${end}-01-01&yt=H&maj=on&i=on&yto=on&geonameid=281184      `
         );
-        const holidays = await response.json();
-        console.log("holidays = ", holidays);
+        const data = await response.json();
+        console.log("holidays = ", data);
 
+        setHolidays(data.items);
 
     }
 
@@ -98,6 +101,16 @@ https://www.hebcal.com/zmanim?&start=2025-01-01&end=2025-12-31&yt=H&cfg=json&im=
             </Box>
 
 
+        </Box>
+
+        <Box>
+            <h3>The holidays at the picked range: </h3>
+            {holidays.map((holiday) => (
+                <Box component={"p"} key={holiday.date}>
+                    {holiday.title} on {holiday.date}
+
+                </Box>
+            ))}
         </Box>
     </Box>
 
