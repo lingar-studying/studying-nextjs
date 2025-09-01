@@ -1,6 +1,7 @@
 import React from "react";
 import {Box, Button, TextField} from "@mui/material";
 import Link from "next/link";
+import useAddPreYomTov from "@/server/components/use-add-pre-yom-tov";
 
 const WorkdaysIsraelJourney = (props) =>{
 
@@ -8,6 +9,8 @@ const WorkdaysIsraelJourney = (props) =>{
     const [end, setEnd] = React.useState(new Date().getFullYear() +1);
 
     const [holidays, setHolidays] = React.useState([]);
+
+    const holidaysWithErev =useAddPreYomTov(holidays) ?? [];
 
     const firstTrying = () => {
 
@@ -106,6 +109,16 @@ https://www.hebcal.com/zmanim?&start=2025-01-01&end=2025-12-31&yt=H&cfg=json&im=
         <Box>
             <h3>The holidays at the picked range: </h3>
             {holidays.map((holiday) => (
+                <Box component={"p"} key={holiday.date}>
+                    {holiday.title} on {holiday.date}
+
+                </Box>
+            ))}
+        </Box>
+
+        <Box>
+            <h3>The holidays at the picked range + Erevs: </h3>
+            {holidaysWithErev.map((holiday) => (
                 <Box component={"p"} key={holiday.date}>
                     {holiday.title} on {holiday.date}
 
