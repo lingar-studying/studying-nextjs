@@ -8,7 +8,6 @@ const useAddPreYomTov = (dates) =>{
         if (!dates || dates.length === 0) return; // << guard
         const newDates = [...dates];
         for(let i = 0; i < newDates.length; i++){
-            console.log(newDates[i]);
             if(!newDates[i].title.includes('Hashana II')){
 
                 const prevDay = new Date(newDates[i].date);
