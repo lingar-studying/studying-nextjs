@@ -6,7 +6,6 @@ const useAddFreeDay = (dates, start, end) => {
 
     const [freeDayList, setFreeDayList] = useState([]);
     const [updatedDates, setUpdatedDates] = useState([]);
-    console.log("we here?")
 
     //on init -
     // get all freeDay at the range
@@ -22,7 +21,7 @@ const useAddFreeDay = (dates, start, end) => {
 
 
 
-    }, [start, end]);
+    }, [dates]);
 
     useEffect(() => {
         if (!dates || dates.length <= 0) return;
@@ -42,7 +41,6 @@ const useAddFreeDay = (dates, start, end) => {
 
         const onlyFreeDays = data.items.filter(item => item.title.includes("HaAtzma"));
 
-        console.log("here only free days " , onlyFreeDays);
         setFreeDayList(onlyFreeDays);
     }
 
@@ -68,7 +66,6 @@ const useAddFreeDay = (dates, start, end) => {
 
 
         }
-        console.log("newDates frre day", newDates);
      setUpdatedDates(newDates);
 
 
@@ -109,7 +106,6 @@ const useAddFreeDay = (dates, start, end) => {
     //
     // }, [dates]);
 
-    console.log("updatedDates frre day2", updatedDates);
     return updatedDates ?? [];
 
 }

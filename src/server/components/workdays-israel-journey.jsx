@@ -12,6 +12,7 @@ const WorkdaysIsraelJourney = (props) =>{
     const [holidays, setHolidays] = React.useState([]);
 
     const holidaysWithErev =useAddPreYomTov(holidays) ?? [];
+    // const holidaysWithErev = [...useAddPreYomTov(holidays)];
 
     const notWorkingDays = useAddFreeDay(holidaysWithErev, start, end);
 
@@ -131,7 +132,7 @@ https://www.hebcal.com/zmanim?&start=2025-01-01&end=2025-12-31&yt=H&cfg=json&im=
         </Box>
 
         <Box>
-            <h3>All not working days in Israel (includes Atzmaut </h3>
+            <h3>All non-working days in Israel (including Atzmaut)</h3>
             {notWorkingDays.map((holiday) => (
                 <Box component={"p"} key={holiday.date}>
                     {holiday.title} on {holiday.date}
