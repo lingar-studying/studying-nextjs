@@ -1,5 +1,4 @@
 //Don't forget handler
-import {error} from "next/dist/build/output/log";
 import {log} from "next/dist/server/typescript/utils";
 
 export default async function handler(req, res) {
@@ -19,7 +18,7 @@ export default async function handler(req, res) {
         }
 
     } else {
-        return res.status(405).json(error);
+        return res.status(405).json({error: "Method Not Allowed"});
     }
 
 
@@ -28,7 +27,6 @@ export default async function handler(req, res) {
 ///date service
 
 const generateWorkingDays = (startYear, endYear, holidays) => {
-
     let theDay = new Date(startYear, 0, 1);
     let endDay = new Date(endYear, 0, 1);
 
@@ -44,17 +42,20 @@ const generateWorkingDays = (startYear, endYear, holidays) => {
         //if it's not friday or shabbat
         if (dayOfWeek !== 5 && dayOfWeek !== 6) {
 
-            if (!(theDay.getTime() === nextNotWorkingDay.getTime())) {
-
+            // if (!(theDay.getTime() === nextNotWorkingDay.getTime())) {
+            console.log("the day = ", theDay, "next workign day = ", nextNotWorkingDay);
+            if(!isSameDay(theDay, nextNotWorkingDay)){
                 //adding if it's the same time
-                allWorkingDays.push(new Date(theDay));
+
+                const israeliDate = new Date(theDay).toLocaleDateString("en-CA", { timeZone: "Asia/Jerusalem" });
+                allWorkingDays.push(israeliDate);
 
             }
 
         }
 
         //u need to move to the next
-        if (nextNotWorkingDay.getTime() >= theDay.getTime() && holidayIdx < holidays.length-1) {
+        if ((nextNotWorkingDay.getTime() <= theDay.getTime() || isSameDay(theDay, nextNotWorkingDay)  ) && holidayIdx < holidays.length-1) {
             console.log(holidays[1+holidayIdx]);
             nextNotWorkingDay = new Date(holidays[++holidayIdx].date);
         }
@@ -66,4 +67,10 @@ const generateWorkingDays = (startYear, endYear, holidays) => {
     return allWorkingDays;
 
 
+}
+
+const isSameDay= (d1, d2)=> {
+    return d1.getFullYear() === d2.getFullYear() &&
+        d1.getMonth() === d2.getMonth() &&
+        d1.getDate() === d2.getDate();
 }

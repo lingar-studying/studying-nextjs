@@ -6,6 +6,8 @@ import useAddFreeDay from "@/server/components/use-add-free-day";
 
 const WorkdaysIsraelJourney = (props) => {
 
+    const [showMsg, setShowMsg] = React.useState(false);
+    const [msg, setMsg] = React.useState("");
     const [start, setStart] = React.useState(new Date().getFullYear());
     const [end, setEnd] = React.useState(new Date().getFullYear() + 1);
 
@@ -63,10 +65,26 @@ const WorkdaysIsraelJourney = (props) => {
                     },
                 body: JSON.stringify({start: start, end: end, holidays: notWorkingDays})
 
-            }).then(res => res.json()).then(data => {
+            }).then(res => {
 
+                return res.json();
+            }).then(data => {
                 console.log("all working days: \n", data);
-            })
+                setMsg("Working days in Israel have generated - see the console.");
+
+
+            }).catch(err => {
+
+                setMsg("error occurred: "+ err);
+
+                console.log(err)
+            }).then(()=>{
+                setShowMsg(true);
+                setTimeout(()=>{
+                    setShowMsg(false);
+
+                },3000)
+            });
 
         }
     }, [notWorkingDays])
@@ -74,6 +92,13 @@ const WorkdaysIsraelJourney = (props) => {
 
     return (<>
         <Box component="div">
+
+            <h1 style= {{position: "absolute", top: "500px", left: "200px", display: showMsg ? "block" : "none",
+            background: "red"}}>
+                {msg}
+
+            </h1>
+
             <h1>Studying on Israel Workdays API</h1>
             <h3>TODO- move it to organized locations... </h3>
 
