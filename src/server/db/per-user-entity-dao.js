@@ -30,6 +30,9 @@ export const getAllEntitiesPerUser = async (id, entityName, optionalScheme=null)
 }
 
 export const getEntityPerUser = async (userId, entityName, id, optionalScheme = null) =>{
+    await connectDB2();
+
+
     let EntityModel;
     try {
         EntityModel = mongoose.model(entityName); // Try to access the model
@@ -52,6 +55,7 @@ export const getEntityPerUser = async (userId, entityName, id, optionalScheme = 
 
 // return  addStockToDb.save();
 export const createEntityPerUser = async (id, data, entityName, optionalScheme = null) => {
+    await connectDB2();
 
     let EntityModel;
     try {
@@ -73,6 +77,7 @@ export const createEntityPerUser = async (id, data, entityName, optionalScheme =
 
 
 export const updateEntityPerUser = async (id, data, entityName, optionalScheme = null) => {
+    await connectDB2();
 
     let EntityModel;
     try {
@@ -114,6 +119,7 @@ export const updateEntityPerUser = async (id, data, entityName, optionalScheme =
 //to pass: {"_id":"68093aa8cd34d55f46233c63"}
 export const deleteEntityPerUser = async(userId, id, entityName, optionalScheme = null) =>{
 
+    await connectDB2();
 
 
     let EntityModel;

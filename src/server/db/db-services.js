@@ -113,6 +113,7 @@ export const createInitData = async () => {
 
 
 export const getAllBookmarks = async () =>{
+    await connectDB2();
 
 
     let BookmarkModel2;
@@ -128,6 +129,8 @@ export const getAllBookmarks = async () =>{
 }
 
 export const getBookmark = async (id) =>{
+    await connectDB2();
+
     let BookmarkModel2;
     try {
         BookmarkModel2 = mongoose.model('bookmarks'); // Try to access the model
@@ -141,6 +144,7 @@ export const getBookmark = async (id) =>{
 // const addStockToDb = new StockModel(stock);
 // return  addStockToDb.save();
 export const createBookmark = async (bookmark) => {
+    await connectDB2();
 
     let BookmarkModel2;
     try {
@@ -155,6 +159,8 @@ export const createBookmark = async (bookmark) => {
 
 
 export const updateBookmark = async (bookmark) => {
+    await connectDB2();
+
     console.log("bookmark = ", bookmark);
 
     let BookmarkModel2;
@@ -184,6 +190,7 @@ export const updateBookmark = async (bookmark) => {
 }
 
 export const deleteBookmark = async(id) =>{
+    await connectDB2();
 
 
     console.log("id = ", id)
