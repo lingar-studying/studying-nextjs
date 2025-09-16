@@ -1,5 +1,5 @@
 import {createEntity} from "@/server/db/generic-entity-dao";
-import {CarScheme} from "@/server/db/all-schemes";
+import {CarScheme, GlassScheme} from "@/server/db/all-schemes";
 
 export default async function handler(req, res) {
 
@@ -10,7 +10,7 @@ export default async function handler(req, res) {
     if (req.method === 'GET') {
 
 
-        
+
 
 
         // res.status(200).json(getBookmarks());
@@ -21,9 +21,9 @@ export default async function handler(req, res) {
 
         try{
             const reqData = req.body;
-            console.log("reqData", reqData, CarScheme);
-            const data = await createEntity(reqData, "cars", CarScheme);
-
+            console.log("reqData", reqData, GlassScheme);
+            const data = await createEntity(reqData, "glass", GlassScheme);
+            console.log("id prop = ", data.id);
             return res.status(200).json(data);
         }catch (err){
 
