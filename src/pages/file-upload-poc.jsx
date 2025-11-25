@@ -1,6 +1,7 @@
 import {DragAndDropUpload, DragAndDropUploadUpgraded, MultiUpload, SingleUpload} from "@/components/file-components";
 import React from "react";
 import {Box} from "@mui/material";
+import Image from 'next/image'
 
 const FileUploadPoc = () =>{
 
@@ -17,6 +18,15 @@ const FileUploadPoc = () =>{
 
             <DragAndDropUpload/>
             <DragAndDropUploadUpgraded/>
+
+            <img src={`C:\\Users\\lingar\\Downloads\\studying-next-js-2025-11-25\\מצלמות עיריה.jpeg`} style={{ maxWidth: '100%' }} />
+            <br/>
+            <Image
+                src="/shefa.jpg"
+                width={500}
+                height={500}
+                alt="Picture of the author"
+            />
 
         </>
     )

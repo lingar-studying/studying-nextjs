@@ -18,6 +18,7 @@ export default function handler(req, res) {
     try {
         // const uploadDir = path.join(process.cwd(), 'download', `studying-next-js-${new Date().toISOString().slice(0,10)}`);//relative to the project
         const uploadDir = path.join(os.homedir(), 'Downloads', `studying-next-js-${new Date().toISOString().slice(0, 10)}`);//of win sys
+        // const uploadDir = path.join(process.cwd(), 'public', 'uploads');//Upload to the public
 
         //some conditions flags.
 
