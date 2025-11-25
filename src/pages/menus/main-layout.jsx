@@ -34,6 +34,10 @@ const MainLayout = ({children})=> (<>
         <li>
             <Link href="/pdf-poc">PDF POC (by Puppeteer)</Link>
         </li>
+
+        <li>
+            <Link href="/file-upload-poc">File Upload POC</Link>
+        </li>
     </Box>
 
     <>

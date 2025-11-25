@@ -31,63 +31,69 @@ export default function handler(req, res) {
         form.parse(req, (err, fields, files) => {
 
 
-            if (err) return res.status(500).json({error: err.message});
-            console.log("files & fields", files, fields);
+                if (err) return res.status(500).json({error: err.message});
+                console.log("files & fields", files, fields);
 
-            // const flagFileType = fields.flagFileType ?? null;//this make the types not working.
-
-
-            //this makes error in the saving on multi
-            const flagFileType = fields.flagFileType?.[0] ?? null;
+                // const flagFileType = fields.flagFileType ?? null;//this make the types not working.
 
 
-            // const flagFileType = null;
-            //all types - not available , but for the studying we keep it open - so on default we keep it open.
-            let allowedExts = [];// [".pdf", ".png", ".jpg"];
-            let allowedMimes = [];// ["application/pdf", "image/png", "image/jpeg"];
+                //this makes error in the saving on multi
+                const flagFileType = fields.flagFileType?.[0] ?? null;
 
-            if (flagFileType) {
-                if (flagFileType === 'only_images') {
-                    allowedExts = [".png", ".jpg", ".jpeg"];
-                    allowedMimes = ["image/png", "image/jpeg"];
-                } else if (flagFileType === 'only_pdf') {
-                    allowedExts = [".pdf"];
-                    allowedMimes = ["application/pdf"];
-                } else if (flagFileType === 'all') {
-                    allowedExts = [".pdf", ".png", ".jpg"];
-                    allowedMimes = ["application/pdf", "image/png", "image/jpeg"];
 
+                // const flagFileType = null;
+                //all types - not available , but for the studying we keep it open - so on default we keep it open.
+                let allowedExts = [];// [".pdf", ".png", ".jpg"];
+                let allowedMimes = [];// ["application/pdf", "image/png", "image/jpeg"];
+
+                if (flagFileType) {
+                    if (flagFileType === 'only_images') {
+                        allowedExts = [".png", ".jpg", ".jpeg"];
+                        allowedMimes = ["image/png", "image/jpeg"];
+                    } else if (flagFileType === 'only_pdf') {
+                        allowedExts = [".pdf"];
+                        allowedMimes = ["application/pdf"];
+                    } else if (flagFileType === 'all') {
+                        allowedExts = [".pdf", ".png", ".jpg"];
+                        allowedMimes = ["application/pdf", "image/png", "image/jpeg"];
+
+                    }
+                    // allowedMimes = [];// ["application/pdf", "image/png", "image/jpeg"];
                 }
-                // allowedMimes = [];// ["application/pdf", "image/png", "image/jpeg"];
-            }
 
 
-            if (flagFileType) {
-                files.files.forEach(f => {
-                    console.log("f = ", f)
+                if (flagFileType) {
+                    // files.files.forEach(f => {
+
+                    for (let f of files.files) {
+                        console.log("f = ", f)
 
                         if (!allowedMimes.includes(f.mimetype) && !allowedExts.includes(path.extname(f.originalFilename).toLowerCase())) {
                             const str = allowedExts.reduce((acc, curr) => {
-                                return acc  + curr +",";
-                            },"");
-                            return res.status(400).json({error: 'File type not allowed, only ' +str });
+                                return acc + curr + ",";
+                            }, "");
+                            return res.status(400).json({error: 'File type not allowed, only ' + str});
 
 
                         }
                     }
-                )
+                }
+                // )
+                // }
+
+
+                if (!files?.files || files.files.length <= 0) return res.status(400).json({error: 'No file uploaded'});
+                // File is already saved in uploadDir
+                console.log("upload folder = ", uploadDir);
+                console.log("files = ", files.files);
+                res.status(200).json({
+                    message: 'Files uploaded', files: files.files.map(f => f.originalFilename)
+                });
             }
-
-
-            if (!files?.files || files.files.length <= 0) return res.status(400).json({error: 'No file uploaded'});
-            // File is already saved in uploadDir
-            console.log("upload folder = ", uploadDir);
-            console.log("files = ", files.files);
-            res.status(200).json({
-                message: 'Files uploaded', files: files.files.map(f => f.originalFilename)
-            });
-        });
-    } catch (err) {
+        )
+        ;
+    } catch
+        (err) {
 
         return res.status(500).json({error: err.message});
     }
